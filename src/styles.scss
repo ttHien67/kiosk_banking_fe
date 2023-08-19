@@ -1,1 +1,93 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+/* You can add global styles to this file, and also import other style files */
+.mr-1 {
+    margin-right: 5px;
+}
+
+.mb-5 {
+    margin-bottom: 20px;
+}
+
+.text-right, .text-md-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.m-cursor {
+    cursor: pointer;
+    margin: 0 1px;
+}
+
+.close {
+    border: none;
+    background-color: transparent;
+    font-size: 30px;
+}
+
+.ng-dropdown-panel {
+	background-color: #fff !important;
+	border: 1px solid #ebebeb;
+	margin-left: -10px;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+    padding: 5px 20px;
+	border-bottom: 1px solid #ebebeb;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option:hover {
+	background-color: #ebebeb;
+}
+
+.invalid-feedback {
+	display: block !important;
+}
+
+.ng-select.is-invalid.nice-select {
+	border: 1px solid #f1556c !important;
+}
+
+.preloader {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    border-radius: 5px;
+}
+
+.logo-sm {
+    background-image: transparent;
+}
+
+label.label input[type="file"] {
+    position: absolute;
+    top: -1000px;
+}
+.label {
+    cursor: pointer;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    padding: 5px 15px;
+    margin: 5px;
+    background: #dddddd;
+    display: inline-block;
+}
+.notification {
+    position: absolute;
+    top: 5px;
+    border: 1px solid #fff;
+    right: 10px;
+    font-size: 9px;
+    background: #f44336;
+    color: #fff;
+    min-width: 20px;
+    padding: 0 5px;
+    height: 20px;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 19px;
+    vertical-align: middle;
+    display: block;
+}
