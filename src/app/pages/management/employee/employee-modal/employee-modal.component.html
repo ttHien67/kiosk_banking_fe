@@ -1,0 +1,178 @@
+<div class="modal-header align-middle">
+  <h4 id="modal-title" class="text-primary">
+    {{
+      type === "create"
+        ? "Create employee"
+        : type === "edit"
+        ? "Edit employee"
+        : "View"
+    }}
+  </h4>
+  <button
+    (click)="activeModal.dismiss('Cross click')"
+    aria-describedby="modal-title"
+    class="close"
+    type="button"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="form" id="form-1">
+    <div class="row">
+      <div class="col-sm-12 col-md-6 form-group">
+        <label class="pt-1">Code<span class="text-danger">(*)</span></label>
+        <input
+          [ngClass]="{ 'is-invalid': isSubmit && f.code.errors }"
+          maxlength="255"
+          class="form-control"
+          formControlName="code"
+          autocomplete="none"
+          placeholder="Enter your code"
+          type="text"
+        />
+        <div *ngIf="isSubmit && f.code.errors" class="invalid-feedback">
+          <span *ngIf="f.code.errors.required">Please enter your code</span>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 form-group">
+        <label class="pt-1">Name<span class="text-danger">(*)</span></label>
+        <input
+          [ngClass]="{ 'is-invalid': isSubmit && f.name.errors }"
+          maxlength="255"
+          class="form-control"
+          formControlName="name"
+          autocomplete="none"
+          placeholder="Enter your name"
+          type="text"
+        />
+        <div *ngIf="isSubmit && f.name.errors" class="invalid-feedback">
+          <span *ngIf="f.name.errors.required">Please enter your name</span>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 form-group">
+        <label class="pt-1">Phone<span class="text-danger">(*)</span></label>
+        <input
+          class="form-control"
+          [ngClass]="{ 'is-invalid': isSubmit && f.phone.errors }"
+          formControlName="phone"
+          placeholder="Enter your phone"
+          autocomplete="none"
+          type="text"
+          maxlength="255"
+        />
+        <div *ngIf="isSubmit && f.phone.errors" class="invalid-feedback">
+          <span *ngIf="f.phone.errors.required">Please enter your phone</span
+          ><br />
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 form-group">
+        <label class="pt-1">Room<span class="text-danger">(*)</span></label>
+        <input
+          class="form-control"
+          [ngClass]="{ 'is-invalid': isSubmit && f.room.errors }"
+          formControlName="room"
+          placeholder="Enter your room"
+          autocomplete="none"
+          type="text"
+          maxlength="255"
+        />
+        <div *ngIf="isSubmit && f.room.errors" class="invalid-feedback">
+          <span *ngIf="f.room.errors.required">Please enter your room</span
+          ><br />
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 form-group">
+        <label class="pt-1"
+          >Quantity Customer<span class="text-danger">(*)</span></label
+        >
+        <ng-select
+          [ngClass]="{ 'is-invalid': isSubmit && f.maxCustomer.errors }"
+          [items]="listQuantity"
+          bindValue="code"
+          bindLabel="code"
+          formControlName="maxCustomer"
+        >
+        </ng-select>
+        <div *ngIf="isSubmit && f.maxCustomer.errors" class="invalid-feedback">
+          <span *ngIf="f.maxCustomer.errors.required"
+            >Please enter your number</span
+          ><br />
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 form-group">
+        <label class="pt-1">Role<span class="text-danger">(*)</span></label>
+        <ng-select
+          [ngClass]="{ 'is-invalid': isSubmit && f.role.errors }"
+          [items]="listRole"
+          bindValue="id"
+          bindLabel="name"
+          formControlName="role"
+          [multiple]="true"
+        >
+        </ng-select>
+        <div *ngIf="isSubmit && f.role.errors" class="invalid-feedback">
+          <span *ngIf="f.role.errors.required">Please enter your role</span
+          ><br />
+        </div>
+      </div>
+    </div>
+    <div class="modal-body" *ngIf="type === 'create'">
+      <h4 id="modal-title" class="text-primary">Employee account</h4>
+      <div class="row">
+        <div class="col-sm-12 col-md-6 form-group">
+          <label class="pt-1"
+            >Username<span class="text-danger">(*)</span></label
+          >
+          <input
+            [ngClass]="{ 'is-invalid': isSubmit && f.userName.errors }"
+            maxlength="255"
+            class="form-control"
+            formControlName="userName"
+            placeholder="Enter your username"
+            autocomplete="none"
+            type="text"
+          />
+          <div *ngIf="isSubmit && f.userName.errors" class="invalid-feedback">
+            <span *ngIf="f.userName.errors.required"
+              >Please enter your username</span
+            ><br />
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-6 form-group">
+          <label class="pt-1"
+            >Password<span class="text-danger">(*)</span></label
+          >
+          <input
+            class="form-control"
+            [ngClass]="{ 'is-invalid': isSubmit && f.password.errors }"
+            formControlName="password"
+            placeholder="Enter your password"
+            autocomplete="none"
+            type="password"
+            maxlength="255"
+          />
+          <div *ngIf="isSubmit && f.password.errors" class="invalid-feedback">
+            <span *ngIf="f.password.errors.required"
+              >Please enter your password</span
+            ><br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button (click)="close()" class="btn btn-secondary" type="button">
+    <i class="fa-solid fa-xmark mr-1"></i>Cancel
+  </button>
+  <button (click)="submit()" class="btn btn-primary" type="button">
+    <i class="fa fa-check mr-1"></i>Confirm
+  </button>
+</div>

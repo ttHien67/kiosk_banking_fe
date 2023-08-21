@@ -5,6 +5,9 @@ import { PagesRoutingModule } from "./pages-routing.module";
 import { BookingComponent } from "./booking/booking.component";
 import { LayoutModule } from "../layout/layout.module";
 import { ReactiveFormsModule } from "@angular/forms";
+import { BookingModalComponent } from "./booking/booking-modal/booking-modal.component";
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
@@ -13,10 +16,12 @@ import { ReactiveFormsModule } from "@angular/forms";
         PagesRoutingModule,
         LayoutModule,
         ReactiveFormsModule,
-
+        NgSelectModule,
+        FormsModule
     ],
     declarations: [
-        BookingComponent
+        BookingComponent,
+        BookingModalComponent
     ]
 })
 
