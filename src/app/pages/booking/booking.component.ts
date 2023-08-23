@@ -6,6 +6,9 @@ import { EmployeeService } from 'src/app/service/module/employee.service';
 import { QrcodeGenerationComponent } from './qrcode-generation/qrcode-generation.component';
 import { NgxScannerQrcodeService, ScannerQRCodeConfig, ScannerQRCodeSelectedFiles } from 'ngx-scanner-qrcode';
 import { ScreenService } from 'src/app/service/module/screen.service';
+import { TicketService } from 'src/app/service/module/ticket.service';
+import { CommentModalComponent } from './comment-modal/comment-modal.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-booking',
@@ -19,7 +22,7 @@ export class BookingComponent implements OnInit {
   listScreen: Array<any> = [];
   backgroundImage: any;
 
-  private currentImage: any;
+  private currentImage = 'default-background.jpg';
 
   public qrCodeResult: ScannerQRCodeSelectedFiles[] = [];
   public config: ScannerQRCodeConfig = {
@@ -34,7 +37,9 @@ export class BookingComponent implements OnInit {
     private serviceBankingService: ServiceBankingService,
     private modalService: NgbModal,
     private qrcode: NgxScannerQrcodeService,
-    private screenService: ScreenService
+    private screenService: ScreenService,
+    private ticketSerrvice: TicketService,
+    private toastService: ToastrService
 
   ) { }
 
@@ -45,7 +50,7 @@ export class BookingComponent implements OnInit {
 
   updateBackgroundImage() {
     
-    let timeDifferenceInMillis = 0;
+    let timeDifferenceInMillis = 1000000;
     const currentTime: any = this.getTime();
     const currentDate = this.getDate();
     
@@ -67,9 +72,9 @@ export class BookingComponent implements OnInit {
         timeDifferenceInMillis = endDate - startDate;
       }
     }
-
+    
     this.backgroundImage = `url(\'assets/img/${this.currentImage}\')`;
-    setTimeout(() => this.updateBackgroundImage(), timeDifferenceInMillis);
+    setTimeout(() => this.updateBackgroundImage(), 10000);
   }
 
   getService() {
@@ -124,9 +129,29 @@ export class BookingComponent implements OnInit {
     });
   }
 
-  searchByQrCode(event: any){
-    console.log(JSON.parse(event[0].value));
-    
+  show(event: any) {
+    const json = {
+      code: JSON.parse(event[0].value).code,
+      name: JSON.parse(event[0].value).name,
+      phone: JSON.parse(event[0].value).phone,
+    }
+    this.ticketSerrvice.getTicket(json).subscribe(res => {
+      if (res.errorCode === '0') {
+        if(res.data[0]){
+          if (res.data[0].status === 2) {
+            const modalRef = this.modalService.open(CommentModalComponent, { centered: true, size: 'lg', backdrop: 'static' });
+            modalRef.componentInstance.item = res.data[0];
+            modalRef.componentInstance.passEntry.subscribe((receivedEntry: any) => {
+              this.modalService.dismissAll();
+            })
+          } else {
+            this.toastService.error("Your transaction's status hasn't been done");
+          }
+        }else {
+          this.toastService.error("QR code is invalid");
+        }
+      }
+    })
   }
 
 }

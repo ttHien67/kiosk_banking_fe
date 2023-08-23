@@ -13,6 +13,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 import { TvScreenComponent } from "./tv-screen/tv-screen.component";
 import { SpeechModule } from './speech';
+import { CommentModalComponent } from "./booking/comment-modal/comment-modal.component";
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { SpeechModule } from './speech';
         BookingComponent,
         BookingModalComponent,
         QrcodeGenerationComponent,
-        TvScreenComponent
+        TvScreenComponent,
+        CommentModalComponent
     ]
 })
 

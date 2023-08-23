@@ -39,8 +39,6 @@
               "node_modules/ngx-toastr/toastr.css",
               "src/styles.scss",
               "src/assets/scss/paper-dashboard.scss",
-              "src/assets/css/demo.css",
-              "src/assets/scss/paper-dashboard.scss",
               "src/assets/css/demo.css"
             ],
             "scripts": [

@@ -36,14 +36,11 @@ export class TicketComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.currentUser = this.authService.currentUser().userId;
+    // this.currentUser = this.authService.currentUser().userId;
     this.initForm();
     this.getService();
     this.getEmployee();
     this.getTicket();
-    console.log(this.authService.currentUser());
-    
-    
   }
 
   initForm() {

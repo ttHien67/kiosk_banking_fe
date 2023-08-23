@@ -13,7 +13,7 @@
         #actionFile="scanner"
         [src]="item.url"
         [config]="config"
-        (event)="searchByQrCode(actionFile.data.value)"
+        (event)="show(actionFile.data.value)"
       ></ngx-scanner-qrcode>
     </div>
     <i class="fa-solid fa-qrcode mr-1"></i>

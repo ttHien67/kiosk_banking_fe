@@ -13,10 +13,11 @@ export class TvScreenComponent implements OnInit {
 
   constructor(
     private ticketService: TicketService
-  ) {
-   }
+  ) {}
 
   ngOnInit() {
+    document.body.style.backgroundImage = 'url(\'assets/img/night-background.webp\')';
+    document.body.style.backgroundSize = "cover"
     this.getTicket();
   }
 
@@ -29,7 +30,7 @@ export class TvScreenComponent implements OnInit {
 
   getTicket(){
     const json = {
-      date: this.getDate()
+      // date: this.getDate()
     }
 
     this.ticketService.getTicket(json).subscribe(res => {

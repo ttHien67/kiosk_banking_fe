@@ -33,6 +33,10 @@ export class TicketService {
         return this.http.post<BaseResponse>(CommandURL.TICKET + '/updateTicket', json, {headers: this.header});
     }
 
+    evaluateTicket(json: any) {
+        return this.http.post<BaseResponse>(CommandURL.TICKET + '/evaluateTicket', json, {headers: this.header});
+    }
+
     deleteTicket(json: any) {
         return this.http.post<BaseResponse>(CommandURL.TICKET + '/deleteTicket', json, {headers: this.header});
     }
