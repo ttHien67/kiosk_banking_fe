@@ -1,0 +1,38 @@
+<div class="container">
+  <button
+    (click)="activeModal.dismiss('Cross click')"
+    aria-describedby="modal-title"
+    class="close close-left"
+    type="button"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <div class="modal-header align-middle">
+    <h4 class="header-title text-primary">QR Code</h4>
+    <p>Take QR code to your employee responsibility</p>
+  </div>
+</div>
+<div class="qrcodeImage">
+  <qrcode
+    [qrdata]="qrCodeData"
+    [allowEmptyString]="true"
+    [ariaLabel]="'QR Code image with the following content...'"
+    [cssClass]="'center'"
+    [colorDark]="'#000000ff'"
+    [colorLight]="'#ffffffff'"
+    [elementType]="'canvas'"
+    [errorCorrectionLevel]="'M'"
+    [imageHeight]="75"
+    [imageWidth]="75"
+    [margin]="4"
+    [scale]="1"
+    [title]="'A custom title attribute'"
+    [width]="300"
+  ></qrcode>
+</div>
+
+<div class="modal-footer">
+  <button (click)="close()" class="btn btn-secondary" type="button">
+    <i class="fa-solid fa-xmark mr-1"></i>Close
+  </button>
+</div>
