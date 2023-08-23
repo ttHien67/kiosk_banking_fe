@@ -10,6 +10,10 @@ import { ServiceBankingModalComponent } from "./service-banking/service-banking-
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { EmployeeModalComponent } from "./employee/employee-modal/employee-modal.component";
+import { TicketComponent } from "./ticket/ticket.component";
+import { TicketModalComponent } from "./ticket/ticket-modal/ticket-modal.component";
+import { ScreenComponent } from "./screen/screen.component";
+import { ScreenModalComponent } from "./screen/screen-modal/screen-modal.component";
 
 
 @NgModule({
@@ -27,7 +31,11 @@ import { EmployeeModalComponent } from "./employee/employee-modal/employee-modal
         ServiceBankingComponent,
         ServiceBankingModalComponent,
         EmployeeComponent,
-        EmployeeModalComponent
+        EmployeeModalComponent,
+        TicketComponent,
+        TicketModalComponent,
+        ScreenComponent,
+        ScreenModalComponent
 
     ]
 })

@@ -95,7 +95,7 @@ article {
     font-family: "Figtree", sans-serif;
     font-size: 1.2rem;
     line-height: 1.6rem;
-    background-image: url('https://images.pexels.com/photos/12420461/pexels-photo-12420461.jpeg?auto=compress&cs=tinysrgb&w=600');
+    // background-image: url('https://images.pexels.com/photos/12420461/pexels-photo-12420461.jpeg?auto=compress&cs=tinysrgb&w=600');
     // background-image: linear-gradient(45deg, #7c9885, #b5b682);
     min-height: 100vh;
     background-repeat: no-repeat;
@@ -151,4 +151,11 @@ article {
     position: absolute;
     white-space: nowrap; 
     width: 1px;
+  }
+
+  .background {
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: background-image 0.5s ease-in-out;
+    padding-bottom: 50px ;
   }

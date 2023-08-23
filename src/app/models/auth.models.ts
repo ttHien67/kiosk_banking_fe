@@ -4,7 +4,7 @@ export class User {
     userCode: any;
     token: any;
     avatarUrl:any;
-    roleCode:any;
+    role:any;
 }
 export class Permission {
     VIEW: any;

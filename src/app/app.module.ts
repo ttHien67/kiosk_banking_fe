@@ -8,7 +8,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 
-
 @NgModule({
   declarations: [	
     AppComponent
@@ -24,7 +23,7 @@ import { FormsModule } from '@angular/forms';
       timeOut: 3000,
       positionClass: 'toast-top-center',
       preventDuplicates: true
-    }),
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

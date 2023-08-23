@@ -11,7 +11,8 @@ export interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
     { path: '/management/service',     title: 'Service Banking',         icon:'nc-bank',       class: '' },
     { path: '/management/employee',     title: 'Employee',         icon:'nc-single-02',       class: '' },
-    { path: '/management/service/booking',     title: 'Booking',         icon:'nc-book-bookmark',       class: '' }
+    { path: '/management/ticket',     title: 'Ticket',         icon:'nc-book-bookmark',       class: '' },
+    { path: '/management/screen',     title: 'Screen',         icon:'nc-book-bookmark',       class: '' }
 ];
 
 @Component({

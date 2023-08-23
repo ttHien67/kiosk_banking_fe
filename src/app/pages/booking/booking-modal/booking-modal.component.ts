@@ -1,6 +1,9 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
+import { EmployeeService } from 'src/app/service/module/employee.service';
+import { TicketService } from 'src/app/service/module/ticket.service';
 
 @Component({
   selector: 'app-booking-modal',
@@ -15,14 +18,20 @@ export class BookingModalComponent implements OnInit {
   
   form: any;
   isSubmit = false;
+  listEmployee: any;
 
   constructor(
     public activeModal: NgbActiveModal,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private employeeService: EmployeeService,
+    private ticketService: TicketService,
+    private toastService: ToastrService
+
   ) { }
 
   ngOnInit() {
     this.initForm();
+    this.getEmployee();
   }
 
   initForm() {
@@ -52,14 +61,48 @@ export class BookingModalComponent implements OnInit {
     return (d.getHours() + ':' + (d.getMinutes()) + ':' + d.getSeconds());
   }
 
+  
+  getEmployee(){
+    this.employeeService.getEmployee({role: [this.item?.id]}).subscribe(res => {
+      if(res.errorCode === '0'){
+        this.listEmployee = res.data;
+
+        // auto choose teller mapping your role
+        let randomTeller = Math.floor(Math.random() * this.listEmployee.length);
+        this.f.employeeId.patchValue(this.listEmployee[randomTeller]?.id);
+        
+      }
+    })
+  }
+
   close() {
     this.passEntry.emit();
   }
 
   submit() {
+    this.isSubmit = true;
     if(this.form.status === 'INVALID'){
       return;
     }
+
+    this.create();
+    this.isSubmit = false;
+  }
+
+
+  create() {
+    const json = {
+      ...this.form.value,
+      code: Math.floor(Math.random() * (999 - 100) + 100)
+    }
+
+    this.ticketService.createTicket(json).subscribe(res => {
+      if(res.errorCode !== '0'){
+        this.toastService.error("something was wrong");
+      }else{
+        this.passEntry.emit(json);
+      }
+    })
   }
 
 }

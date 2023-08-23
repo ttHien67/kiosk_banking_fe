@@ -8,5 +8,12 @@ export class CommandURL {
 
     public static ROLE = enviroment.PROCESS_SERVICE + "/api/banking/role";
 
+    public static TICKET = enviroment.PROCESS_SERVICE + "/api/banking/ticket";
+
+    // Login 
+    public static LOGIN = enviroment.PROCESS_SERVICE + '/api/banking/auth';
+
+    public static SCREEN = enviroment.PROCESS_SERVICE + '/api/banking/screen';
+
 
 }

@@ -18,7 +18,7 @@ export class ServiceBankingComponent implements OnInit {
 
   totalSize = 0;
   pageSize = 5;
-  pageNumber = 0;
+  pageNumber = 1;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -46,11 +46,14 @@ export class ServiceBankingComponent implements OnInit {
 
   getService() {
     const json = {
+      page: this.pageNumber,
+      limit: this.pageSize,
       ...this.form.value
     }
     this.serviceBankingService.getService(json).subscribe(res => {
       if(res.errorCode === '0'){
-        this.listService = res.data
+        this.listService = res.data;
+        this.totalSize = res.totalRecord;
       }
     })
   }
@@ -108,11 +111,11 @@ export class ServiceBankingComponent implements OnInit {
   }
 
   changePageSize(item: any){
-
+    this.pageSize = item;
   }
 
-  changePage(size: any){
-
+  changePage(item: any){
+    this.pageNumber = item;
   }
 
 }

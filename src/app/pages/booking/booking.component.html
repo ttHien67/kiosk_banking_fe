@@ -1,4 +1,24 @@
-<body>
+<div [ngStyle]="{ 'background-image': backgroundImage }" class="background">
+  <label class="label btn btn-secondary">
+    <input
+      placeholder="Scan"
+      #file
+      type="file"
+      (change)="onSelects(file.files)"
+      [accept]="'.jpg, .png, .gif, .jpeg'"
+    />
+
+    <div *ngFor="let item of qrCodeResult" hidden="true">
+      <ngx-scanner-qrcode
+        #actionFile="scanner"
+        [src]="item.url"
+        [config]="config"
+        (event)="searchByQrCode(actionFile.data.value)"
+      ></ngx-scanner-qrcode>
+    </div>
+    <i class="fa-solid fa-qrcode mr-1"></i>
+    <span>Scan file</span>
+  </label>
   <section class="articles">
     <article *ngFor="let item of listService">
       <div class="article-wrapper">
@@ -29,4 +49,4 @@
       </div>
     </article>
   </section>
-</body>
+</div>
