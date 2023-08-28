@@ -106,9 +106,6 @@ export class ScreenModalComponent implements OnInit {
       ...this.form.value,
       image: this.nameImage || this.f.image.value,
     }
-
-    console.log(json);
-    
     this.screenService.updateScreen(json).subscribe(res => {
       if (res.errorCode === '0') {
         this.toastService.success(res.errorDesc);

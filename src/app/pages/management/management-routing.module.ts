@@ -10,22 +10,22 @@ const routes: Routes = [
     {
         path: "service",
         component: ServiceBankingComponent,
-        // canActivate: [AuthGuard]
+        canActivate: [AuthGuard]
     },
     {
         path: "employee",
         component: EmployeeComponent,
-        // canActivate: [AuthGuard]
+        canActivate: [AuthGuard]
     },
     {
         path: "ticket",
         component: TicketComponent,
-        // canActivate: [AuthGuard]
+        canActivate: [AuthGuard]
     },
     {
         path: "screen",
         component: ScreenComponent,
-        // canActivate: [AuthGuard] 
+        canActivate: [AuthGuard] 
     }
 ]
 

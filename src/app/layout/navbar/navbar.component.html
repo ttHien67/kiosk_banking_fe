@@ -46,7 +46,11 @@
       </form>
       <ul class="navbar-nav">
         <li class="nav-item dropdown" #menu>
-          <a class="nav-link btn-magnify" id="dropdownMenuAccount">
+          <a
+            class="nav-link btn-magnify"
+            id="dropdownMenuAccount"
+            (click)="show(menu)"
+          >
             <i class="nc-icon nc-single-02"></i>
             <p>
               <span class="d-lg-none d-md-block">Stats</span>
@@ -75,6 +79,7 @@
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
+            (click)="show(notification)"
           >
             <i class="nc-icon nc-bell-55"></i>
             <span class="notification" *ngIf="counter > 0">{{ counter }}</span>
@@ -106,9 +111,6 @@
                 {{ item.date }}
               </span>
             </div>
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
           </div>
         </li>
 

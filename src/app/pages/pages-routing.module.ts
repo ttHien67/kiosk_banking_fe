@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BookingComponent } from './booking/booking.component';
 import { LayoutComponent } from '../layout/layout.component';
 import { TvScreenComponent } from './tv-screen/tv-screen.component';
-import { SpeechComponent } from './speech/speech.component';
+import { OcrComponent } from './ocr/ocr.component';
 
 const routes: Routes = [
   {
@@ -13,7 +13,7 @@ const routes: Routes = [
     path: "tv", component: TvScreenComponent
   },
   {
-    path: "speech", component: SpeechComponent
+    path: "ocr", component: OcrComponent
   },
   {
     path: "management", component: LayoutComponent, loadChildren: () => import('./management/management.module').then(m => m.ManagementModule)

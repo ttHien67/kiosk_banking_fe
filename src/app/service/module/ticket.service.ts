@@ -21,8 +21,20 @@ export class TicketService {
         return this.http.post<BaseResponse>(CommandURL.TICKET + '/createTicket', json, {headers: this.header});
     }
 
+    fakeCreateTicket(json : any) {
+        return this.http.post<BaseResponse>(CommandURL.TICKET + '/fakeCreateTicket', json, {headers: this.header});
+    }
+
+    fakeNotification(json : any) {
+        return this.http.post<BaseResponse>(CommandURL.TICKET + '/fakeNotification', json, {headers: this.header});
+    }
+
     getTicket(json : any) {
         return this.http.post<BaseListResponse>(CommandURL.TICKET + '/getTicket', json, {headers: this.header});
+    }
+
+    getTicketForTV(json : any) {
+        return this.http.post<BaseListResponse>(CommandURL.TICKET + '/getTicketForTV', json, {headers: this.header});
     }
 
     getAllTicket(json : any) {

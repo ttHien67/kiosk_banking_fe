@@ -9,6 +9,7 @@ import { ScreenService } from 'src/app/service/module/screen.service';
 import { TicketService } from 'src/app/service/module/ticket.service';
 import { CommentModalComponent } from './comment-modal/comment-modal.component';
 import { ToastrService } from 'ngx-toastr';
+import { BookingConfirmComponent } from './booking-confirm/booking-confirm.component';
 
 @Component({
   selector: 'app-booking',
@@ -25,6 +26,7 @@ export class BookingComponent implements OnInit {
   private currentImage = 'default-background.jpg';
 
   public qrCodeResult: ScannerQRCodeSelectedFiles[] = [];
+  public qrCodeConfirm: ScannerQRCodeSelectedFiles[] = [];
   public config: ScannerQRCodeConfig = {
     constraints: { 
       video: {
@@ -50,31 +52,37 @@ export class BookingComponent implements OnInit {
 
   updateBackgroundImage() {
     
-    let timeDifferenceInMillis = 1000000;
-    const currentTime: any = this.getTime();
+    let timeDifferenceInMillis = 10000;
+    const currentTime: any = new Date(this.getDate() + ' ' + this.getTime());
     const currentDate = this.getDate();
     
     for(let item of this.listScreen){
-      if(currentTime > item.startTime && currentTime < item.endTime){
-        this.currentImage = item.image;
-        const startTime : any = new Date(`1970-01-01 ${item.startTime}`);
-        const endTime : any = new Date(`1970-01-01 ${item.endTime}`);
-        timeDifferenceInMillis = endTime - startTime;
+      if(item.startTime === null){
+        continue;
       }
-      
+      const startTime : any = new Date( this.getDate() + ' '+ item.startTime);
+      const endTime : any = new Date(this.getDate() + ' '+ item.endTime);
+
+      if(currentTime >= startTime && currentTime <= endTime){
+        this.currentImage = item.image;
+        timeDifferenceInMillis = endTime - currentTime;
+      }
     }
     
     for(let item of this.listScreen){ 
-      if(currentDate >= item?.startDate && currentDate < item?.endDate){
+      if(item.startDate === null){
+        continue;
+      }
+      if(currentDate >= item?.startDate && currentDate <= item?.endDate){
         this.currentImage = item.image;
         const startDate : any = new Date(item?.startDate);
         const endDate : any = new Date(item?.endDate);
         timeDifferenceInMillis = endDate - startDate;
       }
     }
-    
+
     this.backgroundImage = `url(\'assets/img/${this.currentImage}\')`;
-    setTimeout(() => this.updateBackgroundImage(), 10000);
+    setTimeout(() => this.getScreen(), timeDifferenceInMillis);
   }
 
   getService() {
@@ -123,9 +131,15 @@ export class BookingComponent implements OnInit {
     })
   }
 
-  public onSelects(files: any) {
+  public onSelectToComment(files: any) {
     this.qrcode.loadFiles(files).subscribe((res: ScannerQRCodeSelectedFiles[]) => {
       this.qrCodeResult = res;
+    });
+  }
+
+  public onSelectToConfirm(files: any) {
+    this.qrcode.loadFiles(files).subscribe((res: ScannerQRCodeSelectedFiles[]) => {
+      this.qrCodeConfirm = res;
     });
   }
 
@@ -151,6 +165,15 @@ export class BookingComponent implements OnInit {
           this.toastService.error("QR code is invalid");
         }
       }
+    })
+  }
+
+  confirm(event: any) {
+    const modalRef = this.modalService.open(BookingConfirmComponent, { centered: true, size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.item = JSON.parse(event[0].value);
+    modalRef.componentInstance.listService = this.listService;
+    modalRef.componentInstance.passEntry.subscribe((receivedEntry: any) => {
+      this.modalService.dismissAll();
     })
   }
 

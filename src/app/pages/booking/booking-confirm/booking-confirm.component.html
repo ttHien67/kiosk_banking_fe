@@ -22,7 +22,6 @@
           autocomplete="none"
           placeholder="Enter your code"
           type="text"
-          [readonly]="true"
         />
         <div *ngIf="isSubmit && f.code.errors" class="invalid-feedback">
           <span *ngIf="f.code.errors.required">Please enter your code</span>

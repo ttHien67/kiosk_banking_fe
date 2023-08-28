@@ -154,8 +154,15 @@ article {
   }
 
   .background {
-    background-repeat: no-repeat;
-    background-size: cover;
     transition: background-image 0.5s ease-in-out;
     padding-bottom: 50px ;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .position_button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Injectable, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -7,6 +7,8 @@ import { ServiceBankingService } from 'src/app/service/module/service-banking.se
 import { TicketService } from 'src/app/service/module/ticket.service';
 import { TicketModalComponent } from './ticket-modal/ticket-modal.component';
 import { AuthService } from 'src/app/service/module/auth.service';
+import { SharedService } from 'src/app/service/module/shared.service';
+import { WebSocketService } from 'src/app/service/module/websocket.service';
 
 @Component({
   selector: 'app-ticket',
@@ -21,9 +23,13 @@ export class TicketComponent implements OnInit {
   listTicket: Array<any> = [];
 
   totalSize = 0;
-  pageSize = 5;
+  pageSize = 10;
   pageNumber = 1;
   currentUser: any;
+  accountRole: any;
+  synth: SpeechSynthesis;
+
+  @Output() dataSent = new EventEmitter<any>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,15 +38,21 @@ export class TicketComponent implements OnInit {
     private toastService: ToastrService,
     private serviceBankingService: ServiceBankingService,
     private ticketService: TicketService,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+    private sharedService: SharedService,
+    private websocketService: WebSocketService,
+  ) { 
+    this.synth = window.speechSynthesis;
+  }
 
   ngOnInit() {
-    // this.currentUser = this.authService.currentUser().userId;
+    this.currentUser = this.authService.currentUser().userId;
+    this.accountRole = this.authService.currentUser().role;
     this.initForm();
     this.getService();
     this.getEmployee();
     this.getTicket();
+    this.connect();
   }
 
   initForm() {
@@ -77,7 +89,7 @@ export class TicketComponent implements OnInit {
     const json = {
       page: this.pageNumber,
       limit: this.pageSize,
-      accountId: this.currentUser,
+      accountId: this.accountRole === 'EMPLOYEE' ? this.currentUser : null,
       ...this.form.value
     }
 
@@ -154,4 +166,28 @@ export class TicketComponent implements OnInit {
     this.getTicket();
   }
 
+  speak(text: string, lang: string = 'en-US'): void {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = lang;
+    this.synth.speak(utterance);
+  }
+
+  speakText(item: any) {
+
+    this.ticketService.fakeNotification(item).subscribe(res => {
+
+    })
+
+    const text = `Mời quý khách hàng số ${item.code} đến quầy số ${item.room}`;
+    this.speak(text, "vi-VN");
+  }
+
+  connect(): void {
+    this.websocketService.connectToCreate();
+      
+    // subscribe receives the value.
+    this.websocketService.notificationMessage.subscribe((data) => {
+      this.getTicket();
+    });
+  }
 }

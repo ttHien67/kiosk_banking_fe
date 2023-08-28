@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -6,11 +6,11 @@ import { EmployeeService } from 'src/app/service/module/employee.service';
 import { TicketService } from 'src/app/service/module/ticket.service';
 
 @Component({
-  selector: 'app-booking-modal',
-  templateUrl: './booking-modal.component.html',
-  styleUrls: ['./booking-modal.component.scss']
+  selector: 'app-booking-confirm',
+  templateUrl: './booking-confirm.component.html',
+  styleUrls: ['./booking-confirm.component.css']
 })
-export class BookingModalComponent implements OnInit {
+export class BookingConfirmComponent implements OnInit {
 
   @Input() item: any;
   @Input() listService: any;
@@ -37,7 +37,7 @@ export class BookingModalComponent implements OnInit {
   initForm() {
     this.form = this.formBuilder.group({
       id: [null],
-      code: [Math.floor(Math.random() * (999 - 100) + 100)],
+      code: [null],
       name: [null, [Validators.required]],
       phone: [null, [Validators.required]],
       date: [this.getDate()],
@@ -45,8 +45,10 @@ export class BookingModalComponent implements OnInit {
       employeeId: [null],
       serviceId: [this.item?.id, [Validators.required]]
     });
-
-    
+    if(this.item){
+      this.f.code.disable();
+      this.form.patchValue(this.item);
+    }
   }
 
   get f() {
@@ -66,14 +68,9 @@ export class BookingModalComponent implements OnInit {
 
   
   getEmployee(){
-    this.employeeService.getEmployee({role: [this.item?.id]}).subscribe(res => {
+    this.employeeService.getEmployee({}).subscribe(res => {
       if(res.errorCode === '0'){
         this.listEmployee = res.data;
-
-        // auto choose teller mapping your role
-        let randomTeller = Math.floor(Math.random() * this.listEmployee.length);
-        this.f.employeeId.patchValue(this.listEmployee[randomTeller]?.id);
-        
       }
     })
   }
@@ -96,10 +93,12 @@ export class BookingModalComponent implements OnInit {
   create() {
     const json = {
       ...this.form.value,
-      status: 0
+      status: 0,
+      code: this.f.code.value
     }
-
-    this.ticketService.createTicket(json).subscribe(res => {
+    console.log(json);
+    
+    this.ticketService.fakeCreateTicket(json).subscribe(res => {
       if(res.errorCode !== '0'){
         this.toastService.error("something was wrong");
       }else{

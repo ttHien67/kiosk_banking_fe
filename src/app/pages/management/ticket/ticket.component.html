@@ -127,6 +127,7 @@
                 <th class="text-center align-middle mw-100">Code</th>
                 <th class="text-center align-middle mw-50">Name</th>
                 <th class="text-center align-middle mw-50">Date</th>
+                <th class="text-center align-middle mw-50">Room</th>
                 <th class="text-center align-middle mw-50">Status</th>
                 <th class="text-center align-middle mw-100">Attitude</th>
                 <th class="text-center align-middle mw-100">Comment</th>
@@ -149,6 +150,9 @@
                 </td>
                 <td class="align-middle">
                   {{ item?.date | date : "MM-dd-yyyy" }}
+                </td>
+                <td class="align-middle">
+                  {{ item?.room }}
                 </td>
                 <td class="align-middle">
                   {{
@@ -174,6 +178,12 @@
                   <i
                     class="fas fa-trash fa-lg text-danger ml-1 m-cursor"
                     title="Xoá"
+                  ></i>
+                  <i
+                    *ngIf="item?.status === 1"
+                    title="Speak"
+                    class="fa-solid fa-volume-high m-cursor"
+                    (click)="speakText(item)"
                   ></i>
                 </td>
               </tr>

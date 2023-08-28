@@ -10,10 +10,11 @@
               <th class="text-center align-middle mw-50">Code</th>
               <th class="text-center align-middle mw-50">Name</th>
               <th class="text-center align-middle mw-50">Room</th>
+              <th class="text-center align-middle mw-50">Status</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngIf="listTicket.length === 0">
+            <tr *ngIf="listTicket?.length === 0">
               <td class="text-center align-middle" colspan="11">No data</td>
             </tr>
             <tr *ngFor="let item of listTicket; let i = index">
@@ -28,6 +29,9 @@
               </td>
               <td class="align-middle text-center">
                 {{ item?.room }}
+              </td>
+              <td class="align-middle text-center">
+                {{ item?.status === 1 ? "In progress" : "No start" }}
               </td>
             </tr>
           </tbody>

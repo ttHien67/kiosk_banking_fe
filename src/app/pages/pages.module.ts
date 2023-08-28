@@ -12,8 +12,10 @@ import { QrcodeGenerationComponent } from "./booking/qrcode-generation/qrcode-ge
 import { QRCodeModule } from 'angularx-qrcode';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 import { TvScreenComponent } from "./tv-screen/tv-screen.component";
-import { SpeechModule } from './speech';
 import { CommentModalComponent } from "./booking/comment-modal/comment-modal.component";
+import { OcrComponent } from "./ocr/ocr.component";
+import { BookingConfirmComponent } from "./booking/booking-confirm/booking-confirm.component";
+import { NotificationComponent } from "./tv-screen/notification/notification.component";
 
 
 @NgModule({
@@ -26,15 +28,17 @@ import { CommentModalComponent } from "./booking/comment-modal/comment-modal.com
         NgSelectModule,
         FormsModule,
         QRCodeModule,
-        NgxScannerQrcodeModule,
-        SpeechModule  
+        NgxScannerQrcodeModule
     ],
     declarations: [
         BookingComponent,
         BookingModalComponent,
         QrcodeGenerationComponent,
         TvScreenComponent,
-        CommentModalComponent
+        CommentModalComponent,
+        OcrComponent,
+        BookingConfirmComponent,
+        NotificationComponent
     ]
 })
 
