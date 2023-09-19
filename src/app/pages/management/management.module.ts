@@ -14,6 +14,7 @@ import { TicketComponent } from "./ticket/ticket.component";
 import { TicketModalComponent } from "./ticket/ticket-modal/ticket-modal.component";
 import { ScreenComponent } from "./screen/screen.component";
 import { ScreenModalComponent } from "./screen/screen-modal/screen-modal.component";
+import { NgxScannerQrcodeModule } from "ngx-scanner-qrcode";
 
 
 @NgModule({
@@ -25,7 +26,9 @@ import { ScreenModalComponent } from "./screen/screen-modal/screen-modal.compone
         ReactiveFormsModule,
         ManagementRoutingModule,
         NgxDropzoneModule,
-        NgSelectModule
+        NgSelectModule,
+        NgxScannerQrcodeModule
+
     ],
     declarations: [
         ServiceBankingComponent,

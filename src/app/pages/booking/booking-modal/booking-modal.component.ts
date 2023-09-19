@@ -55,13 +55,19 @@ export class BookingModalComponent implements OnInit {
 
   getDate() {
     const d = new Date();
-    return (d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate());
+    const month = (d.getMonth() + 1) < 10 ? "0" + (d.getMonth() + 1) : (d.getMonth() + 1);
+    const date = d.getDate() < 10 ? "0" + d.getDate() : d.getDate();
+    return (d.getFullYear() + '-' + month + '-' + date);
 
   }
 
   getTime() {
     const d = new Date();
-    return (d.getHours() + ':' + (d.getMinutes()) + ':' + d.getSeconds());
+    const hours = d.getHours() < 10 ? "0" + d.getHours() : d.getHours();
+    const minutes = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes();
+    const seconds = d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds();
+
+    return (hours + ':' + minutes + ':' + seconds);
   }
 
   

@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ScreenService } from 'src/app/service/module/screen.service';
 import { ScreenModalComponent } from './screen-modal/screen-modal.component';
 import Swal from 'sweetalert2';
+import { NgxScannerQrcodeService, ScannerQRCodeConfig, ScannerQRCodeSelectedFiles } from 'ngx-scanner-qrcode';
 
 @Component({
   selector: 'app-screen',
@@ -119,5 +120,4 @@ export class ScreenComponent implements OnInit {
     this.pageNumber = size;
     this.getScreen();
   }
-
 }

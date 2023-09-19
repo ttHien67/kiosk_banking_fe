@@ -46,6 +46,7 @@
           autocomplete="none"
           placeholder="Enter your name"
           type="text"
+          [readOnly]="type === 'edit'"
         />
         <div *ngIf="isSubmit && f.name.errors" class="invalid-feedback">
           <span *ngIf="f.name.errors.required">Please enter your name</span>
@@ -62,6 +63,7 @@
           autocomplete="none"
           type="text"
           maxlength="255"
+          [readOnly]="type === 'edit'"
         />
         <div *ngIf="isSubmit && f.phone.errors" class="invalid-feedback">
           <span *ngIf="f.phone.errors.required">Please enter your phone</span
@@ -79,6 +81,7 @@
           autocomplete="none"
           type="date"
           maxlength="255"
+          [readOnly]="type === 'edit'"
         />
         <div *ngIf="isSubmit && f.date.errors" class="invalid-feedback">
           <span *ngIf="f.date.errors.required">Please enter your date</span
@@ -96,6 +99,7 @@
           autocomplete="none"
           type="time"
           maxlength="255"
+          [readOnly]="type === 'edit'"
         />
         <div *ngIf="isSubmit && f.time.errors" class="invalid-feedback">
           <span *ngIf="f.time.errors.required">Please enter your time</span
@@ -111,6 +115,7 @@
           bindValue="id"
           bindLabel="name"
           formControlName="serviceId"
+          [readonly]="type === 'edit'"
         >
         </ng-select>
         <div *ngIf="isSubmit && f.serviceId.errors" class="invalid-feedback">
@@ -128,6 +133,7 @@
           bindValue="id"
           bindLabel="name"
           formControlName="employeeId"
+          [readonly]="type === 'edit'"
         >
         </ng-select>
         <div *ngIf="isSubmit && f.serviceId.errors" class="invalid-feedback">

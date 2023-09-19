@@ -9,6 +9,7 @@ import { TicketModalComponent } from './ticket-modal/ticket-modal.component';
 import { AuthService } from 'src/app/service/module/auth.service';
 import { SharedService } from 'src/app/service/module/shared.service';
 import { WebSocketService } from 'src/app/service/module/websocket.service';
+import { NgxScannerQrcodeService, ScannerQRCodeConfig, ScannerQRCodeSelectedFiles } from 'ngx-scanner-qrcode';
 
 @Component({
   selector: 'app-ticket',
@@ -29,6 +30,15 @@ export class TicketComponent implements OnInit {
   accountRole: any;
   synth: SpeechSynthesis;
 
+  public qrCodeResult: ScannerQRCodeSelectedFiles[] = [];
+  public config: ScannerQRCodeConfig = {
+    constraints: { 
+      video: {
+        width: window.innerWidth
+      }
+    } 
+  };
+
   @Output() dataSent = new EventEmitter<any>();
 
   constructor(
@@ -41,6 +51,8 @@ export class TicketComponent implements OnInit {
     private authService: AuthService,
     private sharedService: SharedService,
     private websocketService: WebSocketService,
+    private qrcode: NgxScannerQrcodeService
+
   ) { 
     this.synth = window.speechSynthesis;
   }
@@ -189,5 +201,21 @@ export class TicketComponent implements OnInit {
     this.websocketService.notificationMessage.subscribe((data) => {
       this.getTicket();
     });
+  }
+
+  public onSelects(files: any) {
+    this.qrcode.loadFiles(files).subscribe((res: ScannerQRCodeSelectedFiles[]) => {
+      this.qrCodeResult = res;
+    });
+  }
+
+  searchByQrCode(event: any){
+    const json = JSON.parse(event[0].value);
+    
+    this.ticketService.getTicket(json).subscribe(res => {
+      if(res.errorCode === '0'){
+        this.listTicket = res.data;
+      }
+    })
   }
 }

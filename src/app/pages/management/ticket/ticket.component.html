@@ -80,13 +80,26 @@
 
             <div class="row pt-3">
               <div class="col-4 text-left">
-                <button
-                  type="button"
-                  class="btn btn-primary mr-1"
-                  (click)="openModal(null, 'create')"
-                >
-                  <i class="fas fa-plus mr-1"></i>Create
-                </button>
+                <label class="label btn btn-primary">
+                  <input
+                    placeholder="Scan"
+                    #file
+                    type="file"
+                    (change)="onSelects(file.files)"
+                    [accept]="'.jpg, .png, .gif, .jpeg'"
+                  />
+  
+                  <div *ngFor="let item of qrCodeResult" hidden="true">
+                    <ngx-scanner-qrcode
+                      #actionFile="scanner"
+                      [src]="item.url"
+                      [config]="config"
+                      (event)="searchByQrCode(actionFile.data.value)"
+                    ></ngx-scanner-qrcode>
+                  </div>
+                  <i class="fa-solid fa-qrcode mr-1"></i>
+                  <span>Scan file</span>
+                </label>
               </div>
               <div class="col-8 text-right">
                 <button
@@ -171,13 +184,10 @@
                 </td>
                 <td class="align-middle text-center">
                   <i
+                    *ngIf="item?.status !=2"
                     class="fas fa-edit fa-lg text-primary m-cursor"
                     title="Chỉnh sửa"
                     (click)="openModal(item, 'edit')"
-                  ></i>
-                  <i
-                    class="fas fa-trash fa-lg text-danger ml-1 m-cursor"
-                    title="Xoá"
                   ></i>
                   <i
                     *ngIf="item?.status === 1"
