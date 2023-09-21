@@ -1,5 +1,12 @@
 .background {
     padding: 50px 0;
+    min-height: 960px;
+
+    /* Center and scale the image nicely */
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 .wrapper {

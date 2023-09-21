@@ -96,11 +96,12 @@
           bindValue="code"
           bindLabel="code"
           formControlName="maxCustomer"
+          placeholder="Select quantity"
         >
         </ng-select>
         <div *ngIf="isSubmit && f.maxCustomer.errors" class="invalid-feedback">
           <span *ngIf="f.maxCustomer.errors.required"
-            >Please enter your number</span
+            >Please enter your quantity</span
           ><br />
         </div>
       </div>
@@ -114,10 +115,11 @@
           bindLabel="name"
           formControlName="role"
           [multiple]="true"
+          placeholder="Select roles"
         >
         </ng-select>
         <div *ngIf="isSubmit && f.role.errors" class="invalid-feedback">
-          <span *ngIf="f.role.errors.required">Please enter your role</span
+          <span *ngIf="f.role.errors.required">Please enter your roles</span
           ><br />
         </div>
       </div>

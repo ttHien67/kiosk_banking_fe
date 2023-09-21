@@ -45,6 +45,7 @@
                     bindLabel="name"
                     formControlName="role"
                     [multiple]="true"
+                    placeholder="Select role"
                   >
                   </ng-select>
                 </div>
@@ -166,14 +167,14 @@
             </div>
           </div>
           <div
-            class="col-sm-6 col-md-6 col-lg-4 col-xl-3 mt-md-0 d-none d-xl-block m-mb-8"
+            class="col-sm-6 col-md-6 col-lg-4 col-xl-4 mt-md-0 d-none d-xl-block m-mb-8 text-center"
           >
             Show
             {{ totalSize === 0 ? 0 : (pageNumber - 1) * pageSize + 1 }}
             - {{ pageNumber * pageSize }} of
             {{ totalSize }}
           </div>
-          <div class="p-0 col-sm-12 col-md-8 col-lg-4 col-xl-6">
+          <div class="p-0 col-sm-12 col-md-8 col-lg-4 col-xl-5">
             <div class="text-md-right float-md-right mt-2">
               <ngb-pagination
                 (pageChange)="changePage($event)"

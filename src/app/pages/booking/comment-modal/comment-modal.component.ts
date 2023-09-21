@@ -48,9 +48,14 @@ export class CommentModalComponent implements OnInit {
   initForm() {
     this.form = this.formBuilder.group({
       id: [this.item?.id],
-      attitude: [null, Validators.required],
+      // attitude: [null, Validators.required],
       comment: [null, [Validators.maxLength(500)]]
     })
+  }
+
+  getRating() {
+    const rating = document.querySelector('input[name="rate"]:checked');
+    return rating?.getAttribute('value');
   }
 
   submit() {
@@ -60,7 +65,7 @@ export class CommentModalComponent implements OnInit {
     
     const json = {
       ...this.item,
-      attitude: this.f.attitude.value,
+      attitude: this.getRating(),
       comment: this.f.comment.value
     }
     

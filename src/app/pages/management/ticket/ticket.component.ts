@@ -108,6 +108,8 @@ export class TicketComponent implements OnInit {
     this.ticketService.getTicket(json).subscribe(res => {
       if(res.errorCode === '0'){
         this.listTicket = res.data;
+        console.log(this.listTicket);
+        
         this.totalSize = res.totalRecord;
       }
     })
@@ -217,5 +219,9 @@ export class TicketComponent implements OnInit {
         this.listTicket = res.data;
       }
     })
+  }
+
+  getRange(limit: number): number[] {
+    return Array.from({ length: limit }, (_, index) => index);
   }
 }

@@ -14,19 +14,17 @@
   <form [formGroup]="form" id="form-1">
     <div class="row">
       <div class="col-sm-12 col-md-6 form-group">
-        <label class="pt-1">Attitude<span class="text-danger">(*)</span></label>
-        <ng-select
-          [ngClass]="{ 'is-invalid': isSubmit && f.attitude.errors }"
-          [items]="listComment"
-          bindValue="name"
-          bindLabel="name"
-          formControlName="attitude"
-        >
-        </ng-select>
-        <div *ngIf="isSubmit && f.attitude.errors" class="invalid-feedback">
-          <span *ngIf="f.code.attitude.required"
-            >Please enter your attitude</span
-          ><br />
+        <div class="star-widget" >
+          <input type="radio" name="rate" id="rate-5" hidden value="5">
+          <label for="rate-5" class="fas fa-star"></label>
+          <input type="radio" name="rate" id="rate-4" hidden value="4">
+          <label for="rate-4" class="fas fa-star"></label>
+          <input type="radio" name="rate" id="rate-3" hidden value="3">
+          <label for="rate-3" class="fas fa-star"></label>
+          <input type="radio" name="rate" id="rate-2" hidden value="2">
+          <label for="rate-2" class="fas fa-star"></label>
+          <input type="radio" name="rate" id="rate-1" hidden value="1">
+          <label for="rate-1" class="fas fa-star"></label>
         </div>
       </div>
 

@@ -58,6 +58,7 @@
                     bindValue="id"
                     bindLabel="name"
                     formControlName="serviceId"
+                    placeholder="Select service"
                   >
                   </ng-select>
                 </div>
@@ -72,6 +73,7 @@
                     bindValue="id"
                     bindLabel="name"
                     formControlName="employeeId"
+                    placeholder="Select employee"
                   >
                   </ng-select>
                 </div>
@@ -88,7 +90,7 @@
                     (change)="onSelects(file.files)"
                     [accept]="'.jpg, .png, .gif, .jpeg'"
                   />
-  
+
                   <div *ngFor="let item of qrCodeResult" hidden="true">
                     <ngx-scanner-qrcode
                       #actionFile="scanner"
@@ -176,15 +178,21 @@
                       : "Done"
                   }}
                 </td>
-                <td class="align-middle">
-                  {{ item?.attitude }}
+                <td class="align-middle text-center">
+                  <div *ngIf="item?.attitude > 0; else other">
+                    <label
+                      *ngFor="let i of getRange(item?.attitude)"
+                      class="icon fas fa-star"
+                    ></label>
+                  </div>
+                  <ng-template #other> </ng-template>
                 </td>
                 <td class="align-middle">
                   {{ item?.comment }}
                 </td>
                 <td class="align-middle text-center">
                   <i
-                    *ngIf="item?.status !=2"
+                    *ngIf="item?.status != 2"
                     class="fas fa-edit fa-lg text-primary m-cursor"
                     title="Chỉnh sửa"
                     (click)="openModal(item, 'edit')"
@@ -226,14 +234,14 @@
             </div>
           </div>
           <div
-            class="col-sm-6 col-md-6 col-lg-4 col-xl-3 mt-md-0 d-none d-xl-block m-mb-8"
+            class="col-sm-6 col-md-6 col-lg-4 col-xl-4 mt-md-0 d-none d-xl-block m-mb-8 text-center"
           >
             Show
             {{ totalSize === 0 ? 0 : (pageNumber - 1) * pageSize + 1 }}
             - {{ pageNumber * pageSize }} of
             {{ totalSize }}
           </div>
-          <div class="p-0 col-sm-12 col-md-8 col-lg-4 col-xl-6">
+          <div class="p-0 col-sm-12 col-md-8 col-lg-4 col-xl-5">
             <div class="text-md-right float-md-right mt-2">
               <ngb-pagination
                 (pageChange)="changePage($event)"
