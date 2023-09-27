@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Injectable, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Injectable,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -9,15 +15,19 @@ import { TicketModalComponent } from './ticket-modal/ticket-modal.component';
 import { AuthService } from 'src/app/service/module/auth.service';
 import { SharedService } from 'src/app/service/module/shared.service';
 import { WebSocketService } from 'src/app/service/module/websocket.service';
-import { NgxScannerQrcodeService, ScannerQRCodeConfig, ScannerQRCodeSelectedFiles } from 'ngx-scanner-qrcode';
+import {
+  NgxScannerQrcodeService,
+  ScannerQRCodeConfig,
+  ScannerQRCodeSelectedFiles,
+} from 'ngx-scanner-qrcode';
+import { log } from 'console';
 
 @Component({
   selector: 'app-ticket',
   templateUrl: './ticket.component.html',
-  styleUrls: ['./ticket.component.scss']
+  styleUrls: ['./ticket.component.scss'],
 })
 export class TicketComponent implements OnInit {
-
   form: any;
   listService: any;
   listEmployee: Array<any> = [];
@@ -32,11 +42,11 @@ export class TicketComponent implements OnInit {
 
   public qrCodeResult: ScannerQRCodeSelectedFiles[] = [];
   public config: ScannerQRCodeConfig = {
-    constraints: { 
+    constraints: {
       video: {
-        width: window.innerWidth
-      }
-    } 
+        width: window.innerWidth,
+      },
+    },
   };
 
   @Output() dataSent = new EventEmitter<any>();
@@ -52,8 +62,7 @@ export class TicketComponent implements OnInit {
     private sharedService: SharedService,
     private websocketService: WebSocketService,
     private qrcode: NgxScannerQrcodeService
-
-  ) { 
+  ) {
     this.synth = window.speechSynthesis;
   }
 
@@ -73,8 +82,8 @@ export class TicketComponent implements OnInit {
       phone: [null],
       date: [null],
       serviceId: [null],
-      employeeId: [null]
-    })
+      employeeId: [null],
+    });
   }
 
   get f() {
@@ -82,19 +91,19 @@ export class TicketComponent implements OnInit {
   }
 
   getEmployee() {
-    this.employeeService.getEmployee({}).subscribe(res => {
-      if(res.errorCode === '0'){
+    this.employeeService.getEmployee({}).subscribe((res) => {
+      if (res.errorCode === '0') {
         this.listEmployee = res.data;
       }
-    })
+    });
   }
 
   getService() {
-    this.serviceBankingService.getService({}).subscribe(res => {
-      if(res.errorCode === '0'){
+    this.serviceBankingService.getService({}).subscribe((res) => {
+      if (res.errorCode === '0') {
         this.listService = res.data;
       }
-    })
+    });
   }
 
   getTicket() {
@@ -102,17 +111,15 @@ export class TicketComponent implements OnInit {
       page: this.pageNumber,
       limit: this.pageSize,
       accountId: this.accountRole === 'EMPLOYEE' ? this.currentUser : null,
-      ...this.form.value
-    }
+      ...this.form.value,
+    };
 
-    this.ticketService.getTicket(json).subscribe(res => {
-      if(res.errorCode === '0'){
+    this.ticketService.getTicket(json).subscribe((res) => {
+      if (res.errorCode === '0') {
         this.listTicket = res.data;
-        console.log(this.listTicket);
-        
         this.totalSize = res.totalRecord;
       }
-    })
+    });
   }
 
   refresh() {
@@ -155,8 +162,12 @@ export class TicketComponent implements OnInit {
   // }
 
   openModal(item: any, type: any) {
-    const modalRef = this.modalService.open(TicketModalComponent, {centered: true, size: 'lg', backdrop: 'static'});
-    if(item){
+    const modalRef = this.modalService.open(TicketModalComponent, {
+      centered: true,
+      size: 'lg',
+      backdrop: 'static',
+    });
+    if (item) {
       modalRef.componentInstance.item = item;
     }
 
@@ -167,15 +178,15 @@ export class TicketComponent implements OnInit {
     modalRef.componentInstance.passEntry.subscribe((receive: any) => {
       this.modalService.dismissAll();
       this.getTicket();
-    })
+    });
   }
 
-  changePageSize(item: any){
+  changePageSize(item: any) {
     this.pageSize = item;
     this.getTicket();
   }
 
-  changePage(size: any){
+  changePage(size: any) {
     this.pageNumber = size;
     this.getTicket();
   }
@@ -187,38 +198,44 @@ export class TicketComponent implements OnInit {
   }
 
   speakText(item: any) {
-
-    this.ticketService.fakeNotification(item).subscribe(res => {
-
-    })
+    this.ticketService.fakeNotification(item).subscribe((res) => {});
 
     const text = `Mời quý khách hàng số ${item.code} đến quầy số ${item.room}`;
-    this.speak(text, "vi-VN");
+    this.speak(text, 'vi-VN');
   }
 
   connect(): void {
-    this.websocketService.connectToCreate();
-      
+    this.websocketService.connectToSearch();
+
     // subscribe receives the value.
-    this.websocketService.notificationMessage.subscribe((data) => {
-      this.getTicket();
+    this.websocketService.searcchTicket.subscribe((data) => {
+      if (data) {
+        this.ticketService.getTicket(data).subscribe((res) => {
+          if (res.errorCode === '0') {
+            this.listTicket = res.data;
+            this.totalSize = res.totalRecord;
+          }
+        });
+      }
     });
   }
 
   public onSelects(files: any) {
-    this.qrcode.loadFiles(files).subscribe((res: ScannerQRCodeSelectedFiles[]) => {
-      this.qrCodeResult = res;
-    });
+    this.qrcode
+      .loadFiles(files)
+      .subscribe((res: ScannerQRCodeSelectedFiles[]) => {
+        this.qrCodeResult = res;
+      });
   }
 
-  searchByQrCode(event: any){
+  searchByQrCode(event: any) {
     const json = JSON.parse(event[0].value);
-    
-    this.ticketService.getTicket(json).subscribe(res => {
-      if(res.errorCode === '0'){
+
+    this.ticketService.getTicket(json).subscribe((res) => {
+      if (res.errorCode === '0') {
         this.listTicket = res.data;
       }
-    })
+    });
   }
 
   getRange(limit: number): number[] {

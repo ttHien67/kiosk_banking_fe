@@ -92,6 +92,7 @@
             class="dropdown-menu dropdown-menu-right"
           >
             <div
+              style="margin-bottom: auto; border-radius: 0px; cursor: pointer"
               class="dropdown-item alert alert-info alert-with-icon alert-dismissible fade show"
               data-notify="container"
               *ngFor="let item of listNotification"
@@ -106,7 +107,7 @@
                 <i class="nc-icon nc-simple-remove"></i>
               </button>
               <span data-notify="icon" class="nc-icon nc-bell-55"></span>
-              <span data-notify="message">
+              <span data-notify="message" (click)="searchTicket(item)">
                 {{ item.name }} has booked transaction at {{ item.time }} in
                 {{ item.date }}
               </span>
