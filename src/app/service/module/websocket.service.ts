@@ -16,6 +16,7 @@ export class WebSocketService {
   stompClient: any;
   notificationMessage = new EventEmitter();
   searcchTicket = new EventEmitter();
+  updateStatus = new EventEmitter();
 
   constructor() {}
 
@@ -34,7 +35,7 @@ export class WebSocketService {
     });
   }
 
-  connectToUpdate(): void {
+  connectToUpdateStatus(): void {
     console.log('Websocket Connection');
     const ws = new SockJS(WEBSOCKET_ENDPOINT);
     this.stompClient = Stomp.over(ws);
@@ -43,7 +44,7 @@ export class WebSocketService {
       _this.stompClient.subscribe(
         WEBSOCKET_UPDATE_TOPIC,
         function (sdkEvent: any) {
-          _this.onMessageReceived(sdkEvent);
+          _this.onUpdateStatus(sdkEvent);
         }
       );
     });
@@ -100,5 +101,9 @@ export class WebSocketService {
 
   onTicketReceived(message: any) {
     this.searcchTicket.emit(JSON.parse(message.body));
+  }
+
+  onUpdateStatus(message: any) {
+    this.updateStatus.emit(JSON.parse(message.body));
   }
 }

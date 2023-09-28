@@ -1,0 +1,202 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="nc-icon nc-globe text-warning"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-category">Capacity</p>
+                <p class="card-title">150GB</p>
+                <p></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <hr />
+          <div class="stats"><i class="fa fa-refresh"></i> Update Now</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="nc-icon nc-money-coins text-success"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-category">Revenue</p>
+                <p class="card-title">$ 1,345</p>
+                <p></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <hr />
+          <div class="stats"><i class="fa fa-calendar-o"></i> Last day</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="nc-icon nc-vector text-danger"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-category">Errors</p>
+                <p class="card-title">23</p>
+                <p></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <hr />
+          <div class="stats">
+            <i class="fa fa-clock-o"></i> In the last hour
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="nc-icon nc-favourite-28 text-primary"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-category">Followers</p>
+                <p class="card-title">+45K</p>
+                <p></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <hr />
+          <div class="stats"><i class="fa fa-refresh"></i> Update now</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="row mb-5">
+    <div class="col-12 card-box">
+      <div class="row">
+        <div class="col-12 p-0">
+          <div class="p-2">
+            <form [formGroup]="form">
+              <div class="row">
+                <label class="col-sm-4 col-md-4 col-lg-1 col-form-label mt-2"
+                  >Date:
+                </label>
+                <div class="col-sm-4 col-md-4 col-lg-2 mt-2">
+                  <input
+                    type="date"
+                    formControlName="date"
+                    class="form-control"
+                    placeholder="Enter your date"
+                    autocomplete="none"
+                  />
+                </div>
+
+                <label class="col-sm-4 col-md-4 col-lg-1 col-form-label mt-2"
+                  >Month:
+                </label>
+                <div class="col-sm-4 col-md-4 col-lg-2 mt-2">
+                  <input
+                    type="month"
+                    formControlName="month"
+                    class="form-control"
+                    placeholder="Enter your month"
+                    autocomplete="none"
+                  />
+                </div>
+
+                <label class="col-sm-4 col-md-4 col-lg-1 col-form-label mt-2"
+                  >Year:
+                </label>
+                <div class="col-sm-4 col-md-4 col-lg-2 mt-2">
+                  <input
+                    type="text"
+                    formControlName="year"
+                    class="form-control"
+                    placeholder="Enter your year"
+                    autocomplete="none"
+                  />
+                </div>
+              </div>
+            </form>
+
+            <div class="row pt-3">
+              <div class="col-8 text-left">
+                <button
+                  type="button"
+                  class="btn btn-primary mr-1 mb-1"
+                  (click)="filter()"
+                >
+                  <i class="fas fa-search mr-1"></i>Search
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-secondary mr-1 mb-1"
+                  (click)="refresh()"
+                >
+                  <i class="fas fa-undo-alt mr-1"></i>Refresh
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">Users Behavior</h5>
+      <p class="card-category">24 Hours performance</p>
+    </div>
+    <div class="card-body">
+      <div id="chart">
+        <apx-chart
+          [series]="chartOptions.series"
+          [chart]="chartOptions.chart"
+          [colors]="chartOptions.colors"
+          [yaxis]="chartOptions.yaxis"
+          [dataLabels]="commonOptions.dataLabels"
+          [markers]="commonOptions.markers"
+          [stroke]="commonOptions.stroke"
+          [grid]="commonOptions.grid"
+          [xaxis]="commonOptions.xaxis"
+          [tooltip]="commonOptions.tooltip"
+        ></apx-chart>
+      </div>
+    </div>
+    <div class="card-footer">
+      <hr />
+      <div class="stats">
+        <i class="fa fa-history"></i> Updated 3 minutes ago
+      </div>
+    </div>
+  </div>
+</div>

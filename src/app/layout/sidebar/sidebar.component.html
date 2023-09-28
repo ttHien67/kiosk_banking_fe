@@ -9,13 +9,13 @@
   </div>
   <ul class="nav">
     <li
-      *ngFor="let menuItem of menuItems"
+      *ngFor="let menuItem of listMenu"
       routerLinkActive="active"
-      class="{{ menuItem.class }}"
+      class="{{ menuItem?.class }}"
     >
-      <a [routerLink]="[menuItem.path]">
-        <i class="nc-icon {{ menuItem.icon }}"></i>
-        <p>{{ menuItem.title }}</p>
+      <a [routerLink]="[menuItem?.path]">
+        <i class="nc-icon {{ menuItem?.icon }}"></i>
+        <p>{{ menuItem?.name }}</p>
       </a>
     </li>
   </ul>

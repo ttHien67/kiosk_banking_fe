@@ -36,7 +36,6 @@ export class TvScreenComponent implements OnInit {
     this.getScreen();
     this.getTicket();
     this.connect();
-    this.connectToNotify();
 
     this.sharedService.speakNotification.subscribe((res) => {
       console.log(res);
@@ -112,21 +111,15 @@ export class TvScreenComponent implements OnInit {
   }
 
   connect(): void {
-    this.websocketService.connectToUpdate();
-    this.websocketService.connectToCreate();
+    this.websocketService.connectToUpdateStatus();
+    this.websocketService.connectToNotify();
+    // this.websocketService.connectToCreate();
 
-    // subscribe receives the value.
-    this.websocketService.notificationMessage.subscribe((data) => {
+    this.websocketService.updateStatus.subscribe((data) => {
       this.getTicket();
     });
-  }
-
-  connectToNotify() {
-    this.websocketService.connectToNotify();
 
     this.websocketService.notificationMessage.subscribe((data) => {
-      console.log(data);
-
       this.openModal(data);
     });
   }

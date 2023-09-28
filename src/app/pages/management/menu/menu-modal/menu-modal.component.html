@@ -1,0 +1,97 @@
+<div class="modal-header align-middle">
+  <h4 id="modal-title" class="text-primary">
+    {{
+      type === "create" ? "Create menu" : type === "edit" ? "Edit menu" : "View"
+    }}
+  </h4>
+  <button
+    (click)="activeModal.dismiss('Cross click')"
+    aria-describedby="modal-title"
+    class="close"
+    type="button"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="form" id="form-1">
+    <div class="row">
+      <div class="col-sm-12 col-md-6 form-group">
+        <label class="pt-1">Name<span class="text-danger">(*)</span></label>
+        <input
+          [ngClass]="{ 'is-invalid': isSubmit && f.name.errors }"
+          maxlength="255"
+          class="form-control"
+          formControlName="name"
+          autocomplete="none"
+          placeholder="Enter your name"
+          type="text"
+        />
+        <div *ngIf="isSubmit && f.name.errors" class="invalid-feedback">
+          <span *ngIf="f.name.errors.required">Please enter name</span>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 form-group">
+        <label class="pt-1">Path<span class="text-danger">(*)</span></label>
+        <input
+          [ngClass]="{ 'is-invalid': isSubmit && f.path.errors }"
+          maxlength="255"
+          class="form-control"
+          formControlName="path"
+          autocomplete="none"
+          placeholder="Enter your path"
+          type="text"
+        />
+        <div *ngIf="isSubmit && f.path.errors" class="invalid-feedback">
+          <span *ngIf="f.path.errors.required">Please enter path</span>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 form-group">
+        <label class="pt-1">Icon<span class="text-danger">(*)</span></label>
+        <ng-select
+          [ngClass]="{ 'is-invalid': isSubmit && f.icon.errors }"
+          [items]="listIcon"
+          bindValue="name"
+          bindLabel="name"
+          formControlName="icon"
+          placeholder="Select icons"
+        >
+        </ng-select>
+        <div *ngIf="isSubmit && f.icon.errors" class="invalid-feedback">
+          <span *ngIf="f.icon.errors.required">Please enter icon</span>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 form-group">
+        <label class="pt-1"
+          >Role have permission access<span class="text-danger"
+            >(*)</span
+          ></label
+        >
+        <ng-select
+          [ngClass]="{ 'is-invalid': isSubmit && f.roleCode.errors }"
+          [items]="listRole"
+          bindValue="name"
+          bindLabel="name"
+          formControlName="roleCode"
+          [multiple]="true"
+          placeholder="Select role for access"
+        >
+        </ng-select>
+        <div *ngIf="isSubmit && f.roleCode.errors" class="invalid-feedback">
+          <span *ngIf="f.roleCode.errors.required">Please choose role </span>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button (click)="close()" class="btn btn-secondary" type="button">
+    <i class="fa-solid fa-xmark mr-1"></i>Cancel
+  </button>
+  <button (click)="submit()" class="btn btn-primary" type="button">
+    <i class="fa fa-check mr-1"></i>Confirm
+  </button>
+</div>
