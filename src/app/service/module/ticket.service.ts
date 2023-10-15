@@ -93,4 +93,28 @@ export class TicketService {
       { headers: this.header }
     );
   }
+
+  statisticMonthly(json: any) {
+    return this.http.post<BaseResponse>(
+      CommandURL.TICKET + '/statisticMonthly',
+      json,
+      { headers: this.header }
+    );
+  }
+
+  getCountTicket(json: any) {
+    return this.http.post<BaseResponse>(
+      CommandURL.TICKET + '/getCountTicket',
+      json,
+      { headers: this.header }
+    );
+  }
+
+  getTicketDataForEmployee(json: any) {
+    return this.http.post<BaseResponse>(
+      CommandURL.TICKET + '/getTicketDataForEmployee',
+      json,
+      { headers: this.header }
+    );
+  }
 }

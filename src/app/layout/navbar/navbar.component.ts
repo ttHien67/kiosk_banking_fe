@@ -148,6 +148,8 @@ export class NavbarComponent implements OnInit {
     this.listNotification = this.listNotification.filter(
       (e) => e.id != item.id
     );
-    this.ticketService.searchTicketForNotification(item).subscribe((res) => {});
+    this.ticketService.searchTicketForNotification(item).subscribe((res) => {
+      this.counter -= 1;
+    });
   }
 }

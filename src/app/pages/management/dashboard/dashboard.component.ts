@@ -1,35 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { map } from 'rxjs';
-import {
-  ApexAxisChartSeries,
-  ApexTitleSubtitle,
-  ApexDataLabels,
-  ApexFill,
-  ApexMarkers,
-  ApexYAxis,
-  ApexXAxis,
-  ApexTooltip,
-  ApexStroke,
-} from 'ng-apexcharts';
+import { Chart, registerables } from 'chart.js';
 import { EmployeeService } from 'src/app/service/module/employee.service';
 import { TicketService } from 'src/app/service/module/ticket.service';
-
-export type ChartOptions = {
-  series: ApexAxisChartSeries | any;
-  chart: any; //ApexChart;
-  dataLabels: ApexDataLabels | any;
-  markers: ApexMarkers | any;
-  title: ApexTitleSubtitle | any;
-  fill: ApexFill | any;
-  yaxis: ApexYAxis | any;
-  xaxis: ApexXAxis | any;
-  tooltip: ApexTooltip | any;
-  stroke: ApexStroke | any;
-  grid: any; //ApexGrid;
-  colors: any;
-  toolbar: any;
-};
 
 @Component({
   selector: 'app-dashboard',
@@ -37,159 +10,42 @@ export type ChartOptions = {
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  @ViewChild('chart') chart: any;
-  public chartOptions: Partial<ChartOptions>;
+  public canvas: any;
+  public ctx: any;
+  public chartColor: any;
+  public chartEmail: any;
+  public chartHours: any;
+  public chartColunm: any;
+
+  ticketDone: any;
+  ticketInProgress: any;
+  ticketNotStart: any;
+
+  sumTicket: any;
+  countNotStartTicket: any;
+  countInProgressTicket: any;
+  countDoneTicket: any;
 
   listEmployee: Array<any> = [];
-  data: Array<any> = [];
+  listEmployeeFiltered: Array<any> = [];
+  listDataForEmployee: Array<any> = [];
   form: any;
 
-  public commonOptions: Partial<ChartOptions> = {
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      curve: 'straight',
-    },
-    toolbar: {
-      tools: {
-        selection: false,
-      },
-    },
-    markers: {
-      size: 6,
-      hover: {
-        size: 10,
-      },
-    },
-    tooltip: {
-      followCursor: false,
-      theme: 'dark',
-      x: {
-        show: false,
-      },
-      marker: {
-        show: false,
-      },
-      y: {
-        title: {
-          formatter: function () {
-            return '';
-          },
-        },
-      },
-    },
-    grid: {
-      clipMarkers: false,
-    },
-    xaxis: {
-      type: 'datetime',
-    },
-  };
-
   constructor(
-    private employeeService: EmployeeService,
     private ticketService: TicketService,
+    private employeeService: EmployeeService,
     private formBuilder: FormBuilder
   ) {
-    this.chartOptions = {
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        curve: 'straight',
-      },
-      toolbar: {
-        tools: {
-          selection: false,
-        },
-      },
-      markers: {
-        size: 6,
-        hover: {
-          size: 10,
-        },
-      },
-      tooltip: {
-        followCursor: false,
-        theme: 'dark',
-        x: {
-          show: false,
-        },
-        marker: {
-          show: false,
-        },
-        y: {
-          title: {
-            formatter: function () {
-              return '';
-            },
-          },
-        },
-      },
-      grid: {
-        clipMarkers: false,
-      },
-      xaxis: {
-        type: 'datetime',
-      },
-    };
-  }
-
-  initChart(title: any, data: any, date: any, month: any, year: any) {
-    this.chartOptions = {
-      series: [
-        {
-          name: 'chart3',
-          data: this.generateDayWiseTimeSeries(
-            new Date('11 Feb 2017').getTime(),
-            20,
-            {
-              min: 10,
-              max: 60,
-            }
-          ),
-        },
-      ],
-      chart: {
-        id: 'yt',
-        group: 'social',
-        type: 'area',
-        height: 300,
-      },
-      colors: ['#00E396'],
-      yaxis: {
-        tickAmount: 2,
-        labels: {
-          minWidth: 40,
-        },
-      },
-    };
-  }
-
-  public generateDayWiseTimeSeries(
-    baseval: any,
-    count: any,
-    yrange: any
-  ): any[] {
-    let i = 0;
-    let series = [];
-    while (i < count) {
-      var x = baseval;
-      var y =
-        Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
-
-      series.push([x, y]);
-      baseval += 86400000;
-      i++;
-    }
-    return series;
+    Chart.register(...registerables);
   }
 
   ngOnInit() {
     this.initForm();
-    this.getEmployee();
-    // this.getStatistic();
+    this.getTicketData();
+    this.getCountTicket();
+    this.getAllEmployee();
+
+    this.getTicketDataForEmployee();
   }
 
   initForm() {
@@ -200,36 +56,194 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  get f() {
-    return this.form.controls;
+  search() {
+    this.getTicketDataForEmployee();
   }
 
-  getEmployee() {
-    this.employeeService.getAllEmployee({}).subscribe((res) => {
+  getTicketData() {
+    this.ticketService.statisticMonthly({}).subscribe((res) => {
       if (res.errorCode === '0') {
-        this.listEmployee = res.data;
-        this.listEmployee = this.listEmployee.map((e) => e.name);
+        this.ticketDone = res.data.ticketDone;
+        this.ticketInProgress = res.data.ticketInProgress;
+        this.ticketNotStart = res.data.ticketNotStart;
+
+        this.ticketChart(
+          this.ticketDone,
+          this.ticketInProgress,
+          this.ticketNotStart
+        );
       }
     });
   }
 
-  // getStatistic() {
-  //   this.bookingService.statisticBooking(this.form.value).subscribe(res => {
-  //     if(res.errorCode === '0'){
-  //       this.data = res.data;
-  //       this.data = this.data.map(e => e?.sumService ? e?.sumService : 0);
-  //       this.initChart(this.listEmployee, this.data, this.f.date?.value, this.f.month?.value, this.f.year?.value);
-
-  //     }
-  //   })
-  // }
-
-  filter() {
-    // this.getStatistic();
+  getAllEmployee() {
+    this.employeeService.getAllEmployee({}).subscribe((res) => {
+      if (res.errorCode === '0') {
+        this.listEmployee = res.data.map((e: any) => e.name);
+      }
+    });
   }
 
-  refresh() {
-    this.initForm();
-    // this.getStatistic();
+  getCountTicket() {
+    this.ticketService.getCountTicket({}).subscribe((res) => {
+      if (res.errorCode === '0') {
+        this.sumTicket = res.data.countSumTicket;
+        this.countDoneTicket = res.data.countDoneTicket;
+        this.countInProgressTicket = res.data.countInProgressTicket;
+        this.countNotStartTicket = res.data.countNotStartTicket;
+
+        this.ticketRate(
+          this.sumTicket,
+          this.countDoneTicket,
+          this.countInProgressTicket,
+          this.countNotStartTicket
+        );
+      }
+    });
+  }
+
+  getTicketDataForEmployee() {
+    const json = {
+      ...this.form.value,
+    };
+
+    console.log(json);
+
+    this.ticketService.getTicketDataForEmployee(json).subscribe((res) => {
+      if (res.errorCode === '0') {
+        this.listDataForEmployee = res.data.map((e: any) =>
+          e === null ? 0 : e?.sumService
+        );
+
+        this.ticketForEmployee(this.listEmployee, this.listDataForEmployee);
+      }
+    });
+  }
+
+  ticketChart(dataDone: any, ticketInProgress: any, ticketNotStart: any) {
+    var speedCanvas: any = document.getElementById('speedChart');
+
+    var dataFirst = {
+      data: ticketNotStart,
+      fill: false,
+      borderColor: '#fcc468',
+      backgroundColor: 'transparent',
+      pointBorderColor: '#fcc468',
+      pointRadius: 4,
+      pointHoverRadius: 4,
+      pointBorderWidth: 8,
+    };
+
+    var dataSecond = {
+      data: dataDone,
+      fill: false,
+      borderColor: '#4acccd',
+      backgroundColor: 'transparent',
+      pointBorderColor: '#4acccd',
+      pointRadius: 4,
+      pointHoverRadius: 4,
+      pointBorderWidth: 8,
+    };
+
+    var dataThird = {
+      data: ticketInProgress,
+      fill: false,
+      borderColor: '#ef8157',
+      backgroundColor: 'transparent',
+      pointBorderColor: '#ef8157',
+      pointRadius: 4,
+      pointHoverRadius: 4,
+      pointBorderWidth: 8,
+    };
+
+    var speedData = {
+      labels: [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+      ],
+      datasets: [dataFirst, dataSecond, dataThird],
+    };
+
+    var chartOptions: any = {
+      legend: {
+        display: false,
+        position: 'top',
+      },
+    };
+
+    var lineChart = new Chart(speedCanvas, {
+      type: 'line',
+      data: speedData,
+      options: chartOptions,
+    });
+  }
+
+  ticketRate(sum: any, done: any, progress: any, notStart: any) {
+    this.canvas = document.getElementById('chartEmail');
+    this.ctx = this.canvas.getContext('2d');
+    this.chartEmail = new Chart(this.ctx, {
+      type: 'pie',
+      data: {
+        labels: [1, 2, 3],
+        datasets: [
+          {
+            label: 'Ticket Rate',
+            backgroundColor: ['#4acccd', '#e3e3e3', '#fcc468'],
+            borderWidth: 0,
+            data: [
+              (done / sum) * 100,
+              (progress / sum) * 100,
+              (notStart / sum) * 100,
+            ],
+          },
+        ],
+      },
+    });
+  }
+
+  ticketForEmployee(listEmployee: any, listDataForEmployee: any) {
+    this.chartColunm = document.getElementById('columnChart');
+    let chartStatus = Chart.getChart('columnChart');
+    if (chartStatus != undefined) {
+      chartStatus.destroy();
+    }
+
+    const data = {
+      labels: listEmployee,
+      datasets: [
+        {
+          label: 'My First Dataset',
+          data: listDataForEmployee,
+          borderWidth: 1,
+        },
+        {
+          label: 'My First Dataset',
+          data: listDataForEmployee,
+          borderWidth: 1,
+        },
+      ],
+    };
+
+    const config = new Chart(this.chartColunm, {
+      type: 'bar',
+      data: data,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
   }
 }

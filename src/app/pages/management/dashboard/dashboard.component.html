@@ -11,8 +11,8 @@
             </div>
             <div class="col-7 col-md-8">
               <div class="numbers">
-                <p class="card-category">Capacity</p>
-                <p class="card-title">150GB</p>
+                <p class="card-category">Sum Ticket</p>
+                <p class="card-title">{{ sumTicket }}</p>
                 <p></p>
               </div>
             </div>
@@ -20,7 +20,7 @@
         </div>
         <div class="card-footer">
           <hr />
-          <div class="stats"><i class="fa fa-refresh"></i> Update Now</div>
+          <div class="stats"><i class="fa fa-refresh"></i></div>
         </div>
       </div>
     </div>
@@ -35,8 +35,8 @@
             </div>
             <div class="col-7 col-md-8">
               <div class="numbers">
-                <p class="card-category">Revenue</p>
-                <p class="card-title">$ 1,345</p>
+                <p class="card-category">Done Ticket</p>
+                <p class="card-title">{{ countDoneTicket }}</p>
                 <p></p>
               </div>
             </div>
@@ -44,7 +44,7 @@
         </div>
         <div class="card-footer">
           <hr />
-          <div class="stats"><i class="fa fa-calendar-o"></i> Last day</div>
+          <div class="stats"><i class="fa fa-calendar-o"></i></div>
         </div>
       </div>
     </div>
@@ -59,8 +59,8 @@
             </div>
             <div class="col-7 col-md-8">
               <div class="numbers">
-                <p class="card-category">Errors</p>
-                <p class="card-title">23</p>
+                <p class="card-category">In-Progress Ticket</p>
+                <p class="card-title">{{ countInProgressTicket }}</p>
                 <p></p>
               </div>
             </div>
@@ -69,7 +69,7 @@
         <div class="card-footer">
           <hr />
           <div class="stats">
-            <i class="fa fa-clock-o"></i> In the last hour
+            <i class="fa fa-clock-o"></i>
           </div>
         </div>
       </div>
@@ -85,8 +85,8 @@
             </div>
             <div class="col-7 col-md-8">
               <div class="numbers">
-                <p class="card-category">Followers</p>
-                <p class="card-title">+45K</p>
+                <p class="card-category">Not Start Ticket</p>
+                <p class="card-title">{{ countNotStartTicket }}</p>
                 <p></p>
               </div>
             </div>
@@ -99,103 +99,115 @@
       </div>
     </div>
   </div>
-  <!-- <div class="row mb-5">
-    <div class="col-12 card-box">
-      <div class="row">
-        <div class="col-12 p-0">
-          <div class="p-2">
-            <form [formGroup]="form">
-              <div class="row">
-                <label class="col-sm-4 col-md-4 col-lg-1 col-form-label mt-2"
-                  >Date:
-                </label>
-                <div class="col-sm-4 col-md-4 col-lg-2 mt-2">
-                  <input
-                    type="date"
-                    formControlName="date"
-                    class="form-control"
-                    placeholder="Enter your date"
-                    autocomplete="none"
-                  />
-                </div>
+  <div class="card">
+    <div class="card-header row">
+      <div class="col-md-4">
+        <h5 class="card-title">Ticket Statictis Monthly</h5>
+        <p class="card-category">24 Hours performance</p>
+      </div>
 
-                <label class="col-sm-4 col-md-4 col-lg-1 col-form-label mt-2"
-                  >Month:
-                </label>
-                <div class="col-sm-4 col-md-4 col-lg-2 mt-2">
-                  <input
-                    type="month"
-                    formControlName="month"
-                    class="form-control"
-                    placeholder="Enter your month"
-                    autocomplete="none"
-                  />
-                </div>
-
-                <label class="col-sm-4 col-md-4 col-lg-1 col-form-label mt-2"
-                  >Year:
-                </label>
-                <div class="col-sm-4 col-md-4 col-lg-2 mt-2">
-                  <input
-                    type="text"
-                    formControlName="year"
-                    class="form-control"
-                    placeholder="Enter your year"
-                    autocomplete="none"
-                  />
-                </div>
-              </div>
-            </form>
-
-            <div class="row pt-3">
-              <div class="col-8 text-left">
-                <button
-                  type="button"
-                  class="btn btn-primary mr-1 mb-1"
-                  (click)="filter()"
-                >
-                  <i class="fas fa-search mr-1"></i>Search
-                </button>
-
-                <button
-                  type="button"
-                  class="btn btn-secondary mr-1 mb-1"
-                  (click)="refresh()"
-                >
-                  <i class="fas fa-undo-alt mr-1"></i>Refresh
-                </button>
-              </div>
+      <div class="col-md-8">
+        <form [formGroup]="form" id="form-1">
+          <div class="row">
+            <div class="col-sm-12 col-md-4 form-group">
+              <label class="pt-1">Date</label>
+              <input
+                maxlength="255"
+                (keyup.enter)="search()"
+                class="form-control"
+                formControlName="date"
+                autocomplete="none"
+                placeholder="Enter your date"
+                type="date"
+              />
             </div>
+
+            <div class="col-sm-12 col-md-4 form-group">
+              <label class="pt-1">Month</label>
+              <input
+                class="form-control"
+                (keyup.enter)="search()"
+                formControlName="month"
+                autocomplete="none"
+                placeholder="Enter your month"
+                type="month"
+              />
+            </div>
+
+            <div class="col-sm-12 col-md-4 form-group">
+              <label class="pt-1">Year</label>
+              <input
+                maxlength="255"
+                (keyup.enter)="search()"
+                class="form-control"
+                formControlName="year"
+                autocomplete="none"
+                placeholder="Enter your year"
+                type="year"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="card-body">
+      <canvas id="columnChart" width="400" height="100"></canvas>
+    </div>
+    <div class="card-footer">
+      <div class="chart-legend">
+        <i class="fa fa-circle text-info"></i> Tesla Model S
+        <i class="fa fa-circle text-warning"></i> BMW 5 Series
+      </div>
+      <hr />
+      <div class="card-stats">
+        <i class="fa fa-check"></i> Data information certified
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">Ticket Rate</h5>
+          <p class="card-category">Last Campaign Performance</p>
+        </div>
+        <div class="card-body">
+          <canvas id="chartEmail"></canvas>
+        </div>
+        <div class="card-footer">
+          <div class="legend">
+            <i class="fa fa-circle text-primary"></i> Done
+            <i class="fa fa-circle text-warning"></i> Not start
+            <i class="fa fa-circle text-gray"></i> In Progress
+          </div>
+          <hr />
+          <div class="stats">
+            <!-- <i class="fa fa-calendar"></i> Number of emails sent -->
           </div>
         </div>
       </div>
     </div>
-  </div> -->
-  <div class="card">
-    <div class="card-header">
-      <h5 class="card-title">Users Behavior</h5>
-      <p class="card-category">24 Hours performance</p>
-    </div>
-    <div class="card-body">
-      <div id="chart">
-        <apx-chart
-          [series]="chartOptions.series"
-          [chart]="chartOptions.chart"
-          [colors]="chartOptions.colors"
-          [yaxis]="chartOptions.yaxis"
-          [dataLabels]="commonOptions.dataLabels"
-          [markers]="commonOptions.markers"
-          [stroke]="commonOptions.stroke"
-          [grid]="commonOptions.grid"
-          [xaxis]="commonOptions.xaxis"
-          [tooltip]="commonOptions.tooltip"
-        ></apx-chart>
-      </div>
-    </div>
-    <div class="card-footer">
-      <hr />
-      <div class="stats">
-        <i class="fa fa-history"></i> Updated 3 minutes ago
+    <div class="col-md-8">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-title">NASDAQ: AAPL</h5>
+          <p class="card-category">Line Chart with Points</p>
+        </div>
+        <div class="card-body">
+          <canvas id="speedChart" height="100"></canvas>
+        </div>
+        <div class="card-footer">
+          <div class="chart-legend">
+            <i class="fa fa-circle text-info"></i> Ticket Done
+            <i class="fa fa-circle text-warning"></i> Ticket Not Start
+            <i class="fa fa-circle text-danger"></i> Ticket In Progress
+          </div>
+          <hr />
+          <div class="stats">
+            <i class="fa fa-history"></i> Updated 3 minutes ago
+          </div>
+        </div>
       </div>
     </div>
   </div>

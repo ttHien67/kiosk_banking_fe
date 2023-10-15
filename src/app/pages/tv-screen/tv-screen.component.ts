@@ -46,7 +46,8 @@ export class TvScreenComponent implements OnInit {
     const d = new Date();
     const month =
       d.getMonth() + 1 < 10 ? '0' + (d.getMonth() + 1) : d.getMonth() + 1;
-    return d.getFullYear() + '-' + month + '-' + d.getDate();
+    const date = d.getDate() + 1 < 10 ? '0' + d.getDate() : d.getDate();
+    return d.getFullYear() + '-' + month + '-' + date;
   }
 
   getTime() {
@@ -111,16 +112,14 @@ export class TvScreenComponent implements OnInit {
   }
 
   connect(): void {
-    this.websocketService.connectToUpdateStatus();
-    this.websocketService.connectToNotify();
-    // this.websocketService.connectToCreate();
+    this.websocketService.connectForTV();
 
     this.websocketService.updateStatus.subscribe((data) => {
       this.getTicket();
     });
 
-    this.websocketService.notificationMessage.subscribe((data) => {
-      this.openModal(data);
+    this.websocketService.createForTV.subscribe((data) => {
+      this.getTicket();
     });
   }
 

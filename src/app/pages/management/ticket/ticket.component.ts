@@ -205,7 +205,7 @@ export class TicketComponent implements OnInit {
   }
 
   connect(): void {
-    this.websocketService.connectToSearch();
+    // this.websocketService.connectToSearch();
 
     // subscribe receives the value.
     this.websocketService.searcchTicket.subscribe((data) => {
