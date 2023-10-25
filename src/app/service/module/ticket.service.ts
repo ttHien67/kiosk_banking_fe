@@ -117,4 +117,11 @@ export class TicketService {
       { headers: this.header }
     );
   }
+
+  export(json: any) {
+    return this.http.post(CommandURL.TICKET + '/export', json, {
+      responseType: 'arraybuffer',
+      headers: new HttpHeaders(),
+    });
+  }
 }

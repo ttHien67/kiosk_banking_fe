@@ -125,6 +125,7 @@ export class DashboardComponent implements OnInit {
 
     var dataFirst = {
       data: ticketNotStart,
+      label: 'Not start',
       fill: false,
       borderColor: '#fcc468',
       backgroundColor: 'transparent',
@@ -136,6 +137,7 @@ export class DashboardComponent implements OnInit {
 
     var dataSecond = {
       data: dataDone,
+      label: 'Done',
       fill: false,
       borderColor: '#4acccd',
       backgroundColor: 'transparent',
@@ -147,6 +149,7 @@ export class DashboardComponent implements OnInit {
 
     var dataThird = {
       data: ticketInProgress,
+      label: 'In progress',
       fill: false,
       borderColor: '#ef8157',
       backgroundColor: 'transparent',
@@ -194,7 +197,7 @@ export class DashboardComponent implements OnInit {
     this.chartEmail = new Chart(this.ctx, {
       type: 'pie',
       data: {
-        labels: [1, 2, 3],
+        labels: ['Done', 'In progress', 'Not start'],
         datasets: [
           {
             label: 'Ticket Rate',
@@ -222,12 +225,7 @@ export class DashboardComponent implements OnInit {
       labels: listEmployee,
       datasets: [
         {
-          label: 'My First Dataset',
-          data: listDataForEmployee,
-          borderWidth: 1,
-        },
-        {
-          label: 'My First Dataset',
+          label: 'Done Column',
           data: listDataForEmployee,
           borderWidth: 1,
         },

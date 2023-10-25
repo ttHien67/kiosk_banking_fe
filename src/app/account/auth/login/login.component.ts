@@ -50,18 +50,23 @@ export class LoginComponent implements OnInit {
     this.authService
       .login(json)
       .pipe(first())
-      .subscribe((res) => {
-        if (res) {
-          if (res.role === 'ADMIN') {
-            this.router.navigate(['/management/dashboard']).then(() => {
-              window.location.reload();
-            });
-          } else if (res.role === 'EMPLOYEE') {
-            this.router.navigate(['/management/ticket']).then(() => {
-              window.location.reload();
-            });
+      .subscribe(
+        (res) => {
+          if (res) {
+            if (res.role === 'ADMIN') {
+              this.router.navigate(['/management/dashboard']).then(() => {
+                window.location.reload();
+              });
+            } else if (res.role === 'EMPLOYEE') {
+              this.router.navigate(['/management/ticket']).then(() => {
+                window.location.reload();
+              });
+            }
           }
-        } else [this.toastService.error('Login failed!')];
-      });
+        },
+        (error) => {
+          this.toastService.error('Login failed!');
+        }
+      );
   }
 }

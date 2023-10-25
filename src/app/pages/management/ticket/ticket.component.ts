@@ -21,6 +21,7 @@ import {
   ScannerQRCodeSelectedFiles,
 } from 'ngx-scanner-qrcode';
 import { log } from 'console';
+import { createFileType, downLoadFile } from 'src/app/utils/export.util';
 
 @Component({
   selector: 'app-ticket',
@@ -240,5 +241,22 @@ export class TicketComponent implements OnInit {
 
   getRange(limit: number): number[] {
     return Array.from({ length: limit }, (_, index) => index);
+  }
+
+  export() {
+    this.ticketService.export({ fileType: 'pdf' }).subscribe(
+      (res) => {
+        if (res) {
+          downLoadFile(
+            res,
+            createFileType('pdf'),
+            'Ticket_' + new Date().toDateString()
+          );
+        }
+      },
+      (error) => {
+        this.toastService.error('Export error');
+      }
+    );
   }
 }

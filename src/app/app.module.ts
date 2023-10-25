@@ -9,9 +9,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [	
-    AppComponent
-   ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -22,10 +20,10 @@ import { FormsModule } from '@angular/forms';
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-center',
-      preventDuplicates: true
-    })
+      preventDuplicates: true,
+    }),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
