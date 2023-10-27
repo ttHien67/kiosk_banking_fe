@@ -7,27 +7,26 @@ import { EmployeeService } from 'src/app/service/module/employee.service';
 @Component({
   selector: 'app-employee-modal',
   templateUrl: './employee-modal.component.html',
-  styleUrls: ['./employee-modal.component.scss']
+  styleUrls: ['./employee-modal.component.scss'],
 })
 export class EmployeeModalComponent implements OnInit {
-
   @Input() type: any;
   @Input() item: any;
   @Input() listRole: any;
   @Output() passEntry: EventEmitter<any> = new EventEmitter();
-  
+
   form: any;
   isSubmit = false;
 
   listQuantity = [
     {
-      code: 5
+      code: 5,
     },
     {
-      code: 10
+      code: 10,
     },
     {
-      code: 15
+      code: 15,
     },
   ];
 
@@ -36,7 +35,7 @@ export class EmployeeModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private employeeService: EmployeeService,
     private toastService: ToastrService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.initForm();
@@ -45,7 +44,7 @@ export class EmployeeModalComponent implements OnInit {
   initForm() {
     this.form = this.formBuilder.group({
       id: [null],
-      code: [null, [Validators.required]],
+      code: [null],
       name: [null, [Validators.required]],
       phone: [null, [Validators.required]],
       room: [null, [Validators.required]],
@@ -86,28 +85,26 @@ export class EmployeeModalComponent implements OnInit {
   }
 
   create() {
-    this.f.roleCode.patchValue("EMPLOYEE");
-    
-    this.employeeService.createEmployee(this.form.value).subscribe(res => {
+    this.f.roleCode.patchValue('EMPLOYEE');
+
+    this.employeeService.createEmployee(this.form.value).subscribe((res) => {
       if (res.errorCode === '0') {
         this.toastService.success(res.errorDesc);
         this.passEntry.emit(res);
-
       } else {
         this.toastService.error(res.errorDesc);
       }
-    })
+    });
   }
 
   update() {
-    this.employeeService.updateEmployee(this.form.value).subscribe(res => {
+    this.employeeService.updateEmployee(this.form.value).subscribe((res) => {
       if (res.errorCode === '0') {
         this.toastService.success(res.errorDesc);
         this.passEntry.emit(res);
       } else {
         this.toastService.error(res.errorDesc);
       }
-    })
+    });
   }
-
 }

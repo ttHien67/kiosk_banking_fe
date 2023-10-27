@@ -244,12 +244,16 @@ export class TicketComponent implements OnInit {
   }
 
   export() {
-    this.ticketService.export({ fileType: 'pdf' }).subscribe(
+    const json = {
+      accountId: this.accountRole === 'EMPLOYEE' ? this.currentUser : null,
+      fileType: 'xlsx',
+    };
+    this.ticketService.export(json).subscribe(
       (res) => {
         if (res) {
           downLoadFile(
             res,
-            createFileType('pdf'),
+            createFileType('xlsx'),
             'Ticket_' + new Date().toDateString()
           );
         }

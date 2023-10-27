@@ -64,10 +64,14 @@
                 </div>
 
                 <label
+                  *ngIf="accountRole != 'EMPLOYEE'"
                   class="col-sm-4 col-md-6 col-lg-5 col-xl-2 col-form-label mt-2"
                   >Employee:
                 </label>
-                <div class="col-sm-7 col-md-6 col-lg-7 col-xl-4 mt-2">
+                <div
+                  class="col-sm-7 col-md-6 col-lg-7 col-xl-4 mt-2"
+                  *ngIf="accountRole != 'EMPLOYEE'"
+                >
                   <ng-select
                     [items]="listEmployee"
                     bindValue="id"
