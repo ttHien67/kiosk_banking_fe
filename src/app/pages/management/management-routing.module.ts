@@ -7,6 +7,7 @@ import { ScreenComponent } from './screen/screen.component';
 import { AuthGuard } from 'src/app/cors/guards/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MenuComponent } from './menu/menu.component';
+import { TrashComponent } from './trash/trash.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,11 @@ const routes: Routes = [
   {
     path: 'menu',
     component: MenuComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'trash',
+    component: TrashComponent,
     canActivate: [AuthGuard],
   },
 ];

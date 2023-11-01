@@ -10,10 +10,9 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.scss']
+  styleUrls: ['./employee.component.scss'],
 })
 export class EmployeeComponent implements OnInit {
-
   form: any;
   listRole: any;
   listEmployee: Array<any> = [];
@@ -28,7 +27,7 @@ export class EmployeeComponent implements OnInit {
     private serviceBankingService: ServiceBankingService,
     private employeeService: EmployeeService,
     private toastService: ToastrService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.initForm();
@@ -36,13 +35,12 @@ export class EmployeeComponent implements OnInit {
     this.getEmployee();
   }
 
-
   initForm() {
     this.form = this.formBuilder.group({
       code: [null],
       name: [null],
-      role: [null]
-    })
+      role: [null],
+    });
   }
 
   get f() {
@@ -53,26 +51,25 @@ export class EmployeeComponent implements OnInit {
     const json = {
       page: this.pageNumber,
       limit: this.pageSize,
-      ...this.form.value
-    }
+      ...this.form.value,
+    };
 
     console.log();
-    
-    
-    this.employeeService.getEmployee(json).subscribe(res => {
-      if(res.errorCode === '0'){
+
+    this.employeeService.getEmployee(json).subscribe((res) => {
+      if (res.errorCode === '0') {
         this.listEmployee = res.data;
         this.totalSize = res.totalRecord;
       }
-    })
+    });
   }
 
   getRole() {
-    this.serviceBankingService.getService({}).subscribe(res => {
-      if(res.errorCode === '0'){
+    this.serviceBankingService.getService({}).subscribe((res) => {
+      if (res.errorCode === '0') {
         this.listRole = res.data;
       }
-    })
+    });
   }
 
   refresh() {
@@ -83,11 +80,11 @@ export class EmployeeComponent implements OnInit {
     this.getEmployee();
   }
 
-  delete(item: any){
+  delete(item: any) {
     if (item) {
       Swal.fire({
         title: 'Warning!',
-        text: 'Data is not restore after deleting',
+        text: 'Are you sure about deleting',
         icon: 'error',
         confirmButtonText: 'OK',
         showCancelButton: true,
@@ -97,26 +94,34 @@ export class EmployeeComponent implements OnInit {
         if (res.value) {
           const json = {
             id: item.id,
-          }
-          this.employeeService.deleteEmployee(json).subscribe(res => {
-            if (res.errorCode === '0') {
-              this.toastService.success(res.errorDesc);
-              this.getEmployee();
-            } else {
-              this.toastService.error(res.errorDesc);
+            deleted: 1,
+          };
+          this.employeeService.deleteEmployee(json).subscribe(
+            (res) => {
+              if (res.errorCode === '0') {
+                this.toastService.success(res.errorDesc);
+                this.getEmployee();
+              } else {
+                this.toastService.error(res.errorDesc);
+              }
+            },
+            (err) => {
+              this.toastService.error(err, 'Notification');
             }
-          }, err => {
-            this.toastService.error(err, 'Notification');
-          });
+          );
         }
-      })
+      });
       return;
     }
   }
 
   openModal(item: any, type: any) {
-    const modalRef = this.modalService.open(EmployeeModalComponent, {centered: true, size: 'lg', backdrop: 'static'});
-    if(item){
+    const modalRef = this.modalService.open(EmployeeModalComponent, {
+      centered: true,
+      size: 'lg',
+      backdrop: 'static',
+    });
+    if (item) {
       modalRef.componentInstance.item = item;
     }
 
@@ -126,17 +131,16 @@ export class EmployeeComponent implements OnInit {
     modalRef.componentInstance.passEntry.subscribe((receive: any) => {
       this.modalService.dismissAll();
       this.getEmployee();
-    })
+    });
   }
 
-  changePageSize(item: any){
+  changePageSize(item: any) {
     this.pageSize = item;
     this.getEmployee();
   }
 
-  changePage(size: any){
+  changePage(size: any) {
     this.pageNumber = size;
     this.getEmployee();
   }
-
 }

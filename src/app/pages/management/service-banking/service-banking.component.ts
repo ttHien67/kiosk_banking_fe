@@ -9,10 +9,9 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-service-banking',
   templateUrl: './service-banking.component.html',
-  styleUrls: ['./service-banking.component.scss']
+  styleUrls: ['./service-banking.component.scss'],
 })
 export class ServiceBankingComponent implements OnInit {
-
   form: any;
   listService: Array<any> = [];
 
@@ -25,19 +24,18 @@ export class ServiceBankingComponent implements OnInit {
     private modalService: NgbModal,
     private serviceBankingService: ServiceBankingService,
     private toastService: ToastrService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.initForm();
     this.getService();
   }
 
-
   initForm() {
     this.form = this.formBuilder.group({
       name: [null],
-      description: [null]
-    })
+      description: [null],
+    });
   }
 
   get f() {
@@ -48,14 +46,14 @@ export class ServiceBankingComponent implements OnInit {
     const json = {
       page: this.pageNumber,
       limit: this.pageSize,
-      ...this.form.value
-    }
-    this.serviceBankingService.getService(json).subscribe(res => {
-      if(res.errorCode === '0'){
+      ...this.form.value,
+    };
+    this.serviceBankingService.getService(json).subscribe((res) => {
+      if (res.errorCode === '0') {
         this.listService = res.data;
         this.totalSize = res.totalRecord;
       }
-    })
+    });
   }
 
   refresh() {
@@ -66,11 +64,11 @@ export class ServiceBankingComponent implements OnInit {
     this.getService();
   }
 
-  delete(item: any){
+  delete(item: any) {
     if (item) {
       Swal.fire({
         title: 'Warning!',
-        text: 'Data is not restore after deleting',
+        text: 'Are you sure about deleting',
         icon: 'error',
         confirmButtonText: 'OK',
         showCancelButton: true,
@@ -80,26 +78,34 @@ export class ServiceBankingComponent implements OnInit {
         if (res.value) {
           const json = {
             id: item.id,
-          }
-          this.serviceBankingService.deleteService(json).subscribe(res => {
-            if (res.errorCode === '0') {
-              this.toastService.success(res.errorDesc);
-              this.getService();
-            } else {
-              this.toastService.error(res.errorDesc);
+            deleted: 1,
+          };
+          this.serviceBankingService.deleteService(json).subscribe(
+            (res) => {
+              if (res.errorCode === '0') {
+                this.toastService.success(res.errorDesc);
+                this.getService();
+              } else {
+                this.toastService.error(res.errorDesc);
+              }
+            },
+            (err) => {
+              this.toastService.error(err, 'Notification');
             }
-          }, err => {
-            this.toastService.error(err, 'Notification');
-          });
+          );
         }
-      })
+      });
       return;
     }
   }
 
   openModal(item: any, type: any) {
-    const modalRef = this.modalService.open(ServiceBankingModalComponent, {centered: true, size: 'lg', backdrop: 'static'});
-    if(item){
+    const modalRef = this.modalService.open(ServiceBankingModalComponent, {
+      centered: true,
+      size: 'lg',
+      backdrop: 'static',
+    });
+    if (item) {
       modalRef.componentInstance.item = item;
     }
 
@@ -107,15 +113,16 @@ export class ServiceBankingComponent implements OnInit {
     modalRef.componentInstance.passEntry.subscribe((receive: any) => {
       this.modalService.dismissAll();
       this.getService();
-    })
+    });
   }
 
-  changePageSize(item: any){
+  changePageSize(item: any) {
     this.pageSize = item;
+    this.getService();
   }
 
-  changePage(item: any){
+  changePage(item: any) {
     this.pageNumber = item;
+    this.getService();
   }
-
 }

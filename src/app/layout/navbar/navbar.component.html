@@ -115,13 +115,25 @@
           </div>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link btn-rotate" href="javascript:void(0)">
+        <li class="nav-item dropdown setting" #setting>
+          <a
+            class="nav-link btn-magnify"
+            id="dropdownMenuSetting"
+            (click)="show(setting)"
+          >
             <i class="nc-icon nc-settings-gear-65"></i>
             <p>
               <span class="d-lg-none d-md-block">Account</span>
             </p>
           </a>
+          <div
+            aria-labelledby="dropdownMenuSetting"
+            class="dropdown-menu dropdown-menu-right"
+          >
+            <a class="dropdown-item">Theme</a>
+            <a class="dropdown-item" routerLink="/management/trash">Trash</a>
+            <a class="dropdown-item">Private</a>
+          </div>
         </li>
       </ul>
     </div>

@@ -1,0 +1,282 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 card-box">
+      <div class="row">
+        <div class="col-12 p-0">
+          <div class="p-2">
+            <form [formGroup]="form">
+              <div class="row">
+                <label
+                  class="col-sm-4 col-md-6 col-lg-5 col-xl-2 col-form-label mt-2"
+                  >Date:
+                </label>
+                <div class="col-sm-7 col-md-6 col-lg-7 col-xl-4 mt-2">
+                  <input
+                    type="date"
+                    formControlName="deletedDate"
+                    class="form-control py-2"
+                    placeholder="Enter your date"
+                    autocomplete="none"
+                  />
+                </div>
+              </div>
+            </form>
+
+            <div class="row pt-3">
+              <div class="col-4 text-left">
+                <!-- <button type="button" class="btn btn-primary mr-1">
+                  <i class="fas fa-plus mr-1"></i>Create
+                </button> -->
+              </div>
+              <div class="col-8 text-right">
+                <button
+                  type="button"
+                  class="btn btn-secondary mr-1 mb-1"
+                  (click)="refresh()"
+                >
+                  <i class="fa-solid fa-rotate-right mr-1"></i>Refresh
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary mr-1 mb-1"
+                  (click)="search()"
+                >
+                  <i class="fas fa-search mr-1"></i>Search
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-bottom-dotted mt-2">
+        <div class="row">
+          <div class="col-6">
+            <label class="text-uppercase font-weight-medium theme-color"
+              >Trash list</label
+            >
+          </div>
+        </div>
+      </div>
+
+      <ul
+        ngbNav
+        #nav="ngbNav"
+        [(activeId)]="active"
+        class="nav-tabs mt-2"
+        (navChange)="navChange($event)"
+      >
+        <li [ngbNavItem]="1">
+          <button ngbNavLink>Employee</button>
+          <ng-template ngbNavContent>
+            <div class="row">
+              <div class="col-12 table-responsive mt-2">
+                <table
+                  class="table table-bordered table-sm table-hover m-w-tabble"
+                >
+                  <thead>
+                    <tr class="m-header-table">
+                      <th class="text-center align-middle mw-100">Code</th>
+                      <th class="text-center align-middle mw-50">Name</th>
+                      <th class="text-center align-middle mw-50">Room</th>
+                      <th class="text-center align-middle mw-150">
+                        Create date
+                      </th>
+                      <th class="text-center align-middle mw-150">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="listEmployee.length === 0">
+                      <td class="text-center align-middle" colspan="11">
+                        No data
+                      </td>
+                    </tr>
+                    <tr *ngFor="let item of listEmployee; let i = index">
+                      <td class="align-middle text-center text-primary">
+                        <span class="m-cursor"> {{ item?.code }}</span>
+                      </td>
+                      <td class="align-middle" style="width: 100px">
+                        {{ item?.name }}
+                      </td>
+                      <td class="align-middle">
+                        {{ item?.room }}
+                      </td>
+                      <td class="align-middle">
+                        {{ item?.createDate | date : "dd/MM/yyyy" }}
+                      </td>
+                      <td class="align-middle text-center">
+                        <i
+                          class="fas fa-rotate-right fa-lg text-primary m-cursor mr-1"
+                          title="Restore"
+                          (click)="restore(item)"
+                        ></i>
+                        <i
+                          class="fas fa-trash fa-lg text-danger ml-1 m-cursor"
+                          title="Delete"
+                          (click)="remove(item)"
+                        ></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div
+                class="row col-12 pr-0 justify-content-md-between align-items-md-center"
+              >
+                <div
+                  class="p-0 col-sm-12 col-md-4 col-lg-4 col-xl-3 pr-0 d-none d-md-block"
+                >
+                  <div class="dataTables_length">
+                    <label class="d-inline-flex align-items-center"
+                      >Show
+                      <select
+                        #t
+                        name="tickets-table_length"
+                        aria-controls="tickets-table"
+                        name="pageSize"
+                        (change)="changePageSize(t.value)"
+                        class="form-select custom-select custom-select-sm form-control form-control-sm mx-2"
+                      >
+                        <option [value]="10">10</option>
+                        <option [value]="25">25</option>
+                        <option [value]="50">50</option>
+                      </select>
+                      rows</label
+                    >
+                  </div>
+                </div>
+                <div
+                  class="col-sm-6 col-md-6 col-lg-4 col-xl-4 mt-md-0 d-none d-xl-block m-mb-8 text-center"
+                >
+                  Show
+                  {{ totalSize === 0 ? 0 : (pageNumber - 1) * pageSize + 1 }}
+                  - {{ pageNumber * pageSize }} of
+                  {{ totalSize }}
+                </div>
+                <div class="p-0 col-sm-12 col-md-8 col-lg-4 col-xl-5">
+                  <div class="text-md-right float-md-right mt-2">
+                    <ngb-pagination
+                      (pageChange)="changePage($event)"
+                      [(page)]="pageNumber"
+                      [collectionSize]="totalSize"
+                      [pageSize]="pageSize"
+                      [rotate]="true"
+                    >
+                    </ngb-pagination>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+          <button ngbNavLink>Service banking</button>
+          <ng-template ngbNavContent>
+            <div class="row">
+              <div class="col-12 table-responsive mt-2">
+                <table
+                  class="table table-bordered table-sm table-hover m-w-tabble"
+                >
+                  <thead>
+                    <tr class="m-header-table">
+                      <th class="text-center align-middle mw-100">Name</th>
+                      <th class="text-center align-middle mw-50">Image</th>
+                      <th class="text-center align-middle mw-150">
+                        Create date
+                      </th>
+                      <th class="text-center align-middle mw-100">
+                        Description
+                      </th>
+                      <th class="text-center align-middle mw-150">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="listService.length === 0">
+                      <td class="text-center align-middle" colspan="11">
+                        No data
+                      </td>
+                    </tr>
+                    <tr *ngFor="let item of listService; let i = index">
+                      <td class="align-middle text-center text-primary">
+                        <span class="m-cursor"> {{ item?.name }}</span>
+                      </td>
+                      <td class="align-middle" style="width: 100px">
+                        <img [src]="'assets/img/' + item?.image" />
+                      </td>
+                      <td class="align-middle">
+                        {{ item?.createDate | date : "dd/MM/yyyy" }}
+                      </td>
+                      <td class="align-middle">
+                        {{ item?.description }}
+                      </td>
+                      <td class="align-middle text-center">
+                        <i
+                          class="fas fa-rotate-right fa-lg text-primary m-cursor"
+                          title="Restore"
+                          (click)="restore(item)"
+                        ></i>
+                        <i
+                          class="fas fa-trash fa-lg text-danger ml-1 m-cursor"
+                          title="Delete"
+                          (click)="remove(item)"
+                        ></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div
+                class="row col-12 pr-0 justify-content-md-between align-items-md-center"
+              >
+                <div
+                  class="p-0 col-sm-12 col-md-4 col-lg-4 col-xl-3 pr-0 d-none d-md-block"
+                >
+                  <div class="dataTables_length">
+                    <label class="d-inline-flex align-items-center"
+                      >Show
+                      <select
+                        #t
+                        name="tickets-table_length"
+                        aria-controls="tickets-table"
+                        name="pageSize"
+                        (change)="changePageSize(t.value)"
+                        class="form-select custom-select custom-select-sm form-control form-control-sm mx-2"
+                      >
+                        <option [value]="10">10</option>
+                        <option [value]="25">25</option>
+                        <option [value]="50">50</option>
+                      </select>
+                      rows</label
+                    >
+                  </div>
+                </div>
+                <div
+                  class="col-sm-6 col-md-6 col-lg-4 col-xl-4 mt-md-0 d-none d-xl-block m-mb-8 text-center"
+                >
+                  Show
+                  {{ totalSize === 0 ? 0 : (pageNumber - 1) * pageSize + 1 }}
+                  - {{ pageNumber * pageSize }} of
+                  {{ totalSize }}
+                </div>
+                <div class="p-0 col-sm-12 col-md-8 col-lg-4 col-xl-5">
+                  <div class="text-md-right float-md-right mt-2">
+                    <ngb-pagination
+                      (pageChange)="changePage($event)"
+                      [(page)]="pageNumber"
+                      [collectionSize]="totalSize"
+                      [pageSize]="pageSize"
+                      [rotate]="true"
+                    >
+                    </ngb-pagination>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+      </ul>
+
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </div>
+  </div>
+</div>

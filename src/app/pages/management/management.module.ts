@@ -20,6 +20,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MenuComponent } from './menu/menu.component';
 import { MenuModalComponent } from './menu/menu-modal/menu-modal.component';
+import { TrashComponent } from './trash/trash.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
@@ -33,6 +35,7 @@ import { MenuModalComponent } from './menu/menu-modal/menu-modal.component';
     NgSelectModule,
     NgxScannerQrcodeModule,
     NgApexchartsModule,
+    NgbModule,
   ],
   declarations: [
     ServiceBankingComponent,
@@ -46,6 +49,7 @@ import { MenuModalComponent } from './menu/menu-modal/menu-modal.component';
     DashboardComponent,
     MenuComponent,
     MenuModalComponent,
+    TrashComponent,
   ],
 })
 export class ManagementModule {}
