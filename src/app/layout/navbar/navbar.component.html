@@ -109,7 +109,7 @@
               <span data-notify="icon" class="nc-icon nc-bell-55"></span>
               <span data-notify="message" (click)="searchTicket(item)">
                 {{ item.name }} has booked transaction at {{ item.time }} in
-                {{ item.date }}
+                {{ item.date | date : "MM-dd-yyyy" }}
               </span>
             </div>
           </div>

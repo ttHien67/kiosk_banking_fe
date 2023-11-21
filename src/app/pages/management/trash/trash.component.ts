@@ -203,7 +203,13 @@ export class TrashComponent implements OnInit {
     }
   }
 
-  changePage(event: any) {}
+  changePage(event: any) {
+    this.pageNumber = event;
+    this.getTabData();
+  }
 
-  changePageSize(event: any) {}
+  changePageSize(event: any) {
+    this.pageSize = event;
+    this.getTabData();
+  }
 }

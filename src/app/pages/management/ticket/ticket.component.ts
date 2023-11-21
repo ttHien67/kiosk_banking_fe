@@ -20,7 +20,6 @@ import {
   ScannerQRCodeConfig,
   ScannerQRCodeSelectedFiles,
 } from 'ngx-scanner-qrcode';
-import { log } from 'console';
 import { createFileType, downLoadFile } from 'src/app/utils/export.util';
 
 @Component({
