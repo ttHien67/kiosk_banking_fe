@@ -83,10 +83,10 @@ export class ServiceBankingComponent implements OnInit {
           this.serviceBankingService.deleteService(json).subscribe(
             (res) => {
               if (res.errorCode === '0') {
-                this.toastService.success(res.errorDesc);
+                this.toastService.success(res.errorDesc, 'Notification');
                 this.getService();
               } else {
-                this.toastService.error(res.errorDesc);
+                this.toastService.error(res.errorDesc, 'Notification');
               }
             },
             (err) => {

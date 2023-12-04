@@ -5,15 +5,18 @@ import { ToastrService } from 'ngx-toastr';
 import { ScreenService } from 'src/app/service/module/screen.service';
 import { ScreenModalComponent } from './screen-modal/screen-modal.component';
 import Swal from 'sweetalert2';
-import { NgxScannerQrcodeService, ScannerQRCodeConfig, ScannerQRCodeSelectedFiles } from 'ngx-scanner-qrcode';
+import {
+  NgxScannerQrcodeService,
+  ScannerQRCodeConfig,
+  ScannerQRCodeSelectedFiles,
+} from 'ngx-scanner-qrcode';
 
 @Component({
   selector: 'app-screen',
   templateUrl: './screen.component.html',
-  styleUrls: ['./screen.component.css']
+  styleUrls: ['./screen.component.css'],
 })
 export class ScreenComponent implements OnInit {
-
   form: any;
   listScreen: Array<any> = [];
 
@@ -26,7 +29,7 @@ export class ScreenComponent implements OnInit {
     private modalService: NgbModal,
     private toastService: ToastrService,
     private screenService: ScreenService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.initForm();
@@ -36,7 +39,7 @@ export class ScreenComponent implements OnInit {
   initForm() {
     this.form = this.formBuilder.group({
       name: [null],
-    })
+    });
   }
 
   get f() {
@@ -47,15 +50,15 @@ export class ScreenComponent implements OnInit {
     const json = {
       page: this.pageNumber,
       limit: this.pageSize,
-      ...this.form.value
-    }
+      ...this.form.value,
+    };
 
-    this.screenService.getScreen(json).subscribe(res => {
-      if(res.errorCode === '0'){
+    this.screenService.getScreen(json).subscribe((res) => {
+      if (res.errorCode === '0') {
         this.listScreen = res.data;
         this.totalSize = res.totalRecord;
       }
-    })
+    });
   }
 
   refresh() {
@@ -66,7 +69,7 @@ export class ScreenComponent implements OnInit {
     this.getScreen();
   }
 
-  delete(item: any){
+  delete(item: any) {
     if (item) {
       Swal.fire({
         title: 'Warning!',
@@ -80,26 +83,33 @@ export class ScreenComponent implements OnInit {
         if (res.value) {
           const json = {
             id: item.id,
-          }
-          this.screenService.deleteScreen(json).subscribe(res => {
-            if (res.errorCode === '0') {
-              this.toastService.success(res.errorDesc);
-              this.getScreen();
-            } else {
-              this.toastService.error(res.errorDesc);
+          };
+          this.screenService.deleteScreen(json).subscribe(
+            (res) => {
+              if (res.errorCode === '0') {
+                this.toastService.success(res.errorDesc, 'Notification');
+                this.getScreen();
+              } else {
+                this.toastService.error(res.errorDesc);
+              }
+            },
+            (err) => {
+              this.toastService.error(err, 'Notification');
             }
-          }, err => {
-            this.toastService.error(err, 'Notification');
-          });
+          );
         }
-      })
+      });
       return;
     }
   }
 
   openModal(item: any, type: any) {
-    const modalRef = this.modalService.open(ScreenModalComponent, {centered: true, size: 'lg', backdrop: 'static'});
-    if(item){
+    const modalRef = this.modalService.open(ScreenModalComponent, {
+      centered: true,
+      size: 'lg',
+      backdrop: 'static',
+    });
+    if (item) {
       modalRef.componentInstance.item = item;
     }
 
@@ -108,15 +118,15 @@ export class ScreenComponent implements OnInit {
     modalRef.componentInstance.passEntry.subscribe((receive: any) => {
       this.modalService.dismissAll();
       this.getScreen();
-    })
+    });
   }
 
-  changePageSize(item: any){
+  changePageSize(item: any) {
     this.pageSize = item;
     this.getScreen();
   }
 
-  changePage(size: any){
+  changePage(size: any) {
     this.pageNumber = size;
     this.getScreen();
   }

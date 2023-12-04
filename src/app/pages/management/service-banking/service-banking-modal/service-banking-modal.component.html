@@ -1,19 +1,14 @@
 <div class="modal-header align-middle">
   <h4 id="modal-title" class="text-primary">
     {{
-      type === "edit"
-        ? "Edit service"
-        : type === "create"
-        ? "Create service"
-        : "View service"
+    type === "edit"
+    ? "Edit service"
+    : type === "create"
+    ? "Create service"
+    : "View service"
     }}
   </h4>
-  <button
-    (click)="activeModal.dismiss('Cross click')"
-    aria-describedby="modal-title"
-    class="close"
-    type="button"
-  >
+  <button (click)="activeModal.dismiss('Cross click')" aria-describedby="modal-title" class="close" type="button">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
@@ -22,61 +17,36 @@
     <div class="row">
       <div class="col-sm-12 col-md-6 form-group">
         <label class="pt-1">Name<span class="text-danger">(*)</span></label>
-        <input
-          [ngClass]="{ 'is-invalid': isSubmit && f.name.errors }"
-          maxlength="255"
-          class="form-control"
-          formControlName="name"
-          autocomplete="none"
-          placeholder="Enter your name"
-          type="text"
-        />
+        <input [ngClass]="{ 'is-invalid': isSubmit && f.name.errors }" maxlength="255" class="form-control"
+          formControlName="name" autocomplete="none" placeholder="Enter your name" type="text" />
         <div *ngIf="isSubmit && f.name.errors" class="invalid-feedback">
-          <span *ngIf="f.name.errors.required">Please enter your name</span
-          ><br />
+          <span *ngIf="f.name.errors.required">Please enter your name</span><br />
           <!-- <span *ngIf="f.code.errors.maxlength"></span> -->
         </div>
       </div>
 
       <div class="col-sm-12 col-md-6">
         <label class="pt-1">Image<span class="text-danger">(*)</span></label>
-        <input
-          type="file"
-          class="form-control py-2"
-          [ngClass]="{ 'is-invalid': isSubmit && f.image.errors }"
-          formControlName="image"
-          (change)="addFile($event)"
-        />
-        <div *ngIf="isSubmit && f.image.errors" class="invalid-feedback">
-          <span *ngIf="f.image.errors.required">Please enter your image</span
-          ><br />
+        <input type="file" class="form-control py-2" [ngClass]="{ 'is-invalid': isSubmit && f.imageBase64.errors }"
+          (change)="addFile($event)" />
+        <div *ngIf="isSubmit && f.imageBase64.errors" class="invalid-feedback">
+          <span *ngIf="f.imageBase64.errors.required">Please enter your image</span><br />
         </div>
-      </div>
-
-      <div
-        class="col-sm-12 col-md-12"
-        *ngIf="url || f.image.value"
-        style="height: 30%"
-      >
-        <img [src]="url || 'assets/img/' + f.image.value" />
       </div>
 
       <div class="col-sm-12 col-md-12 form-group">
-        <label class="pt-1"
-          >Description<span class="text-danger">(*)</span></label
-        >
-        <textarea
-          #event
-          [ngClass]="{ 'is-invalid': isSubmit && f.description.errors }"
-          formControlName="description"
-          class="form-control"
-          placeholder="Enter your description"
-        ></textarea>
+        <label class="pt-1">Description<span class="text-danger">(*)</span></label>
+        <textarea #event [ngClass]="{ 'is-invalid': isSubmit && f.description.errors }" formControlName="description"
+          class="form-control" placeholder="Enter your description"></textarea>
         <div *ngIf="isSubmit && f.description.errors" class="invalid-feedback">
-          <span *ngIf="f.description.errors.required"
-            >Please choose your description</span
-          ><br />
+          <span *ngIf="f.description.errors.required">Please choose your description</span><br />
         </div>
+      </div>
+
+      <div class="col-sm-12 col-md-12 pt-2">
+        <a [href]="f.imageBase64.value" *ngIf="f.imageBase64.value">
+          <img [src]="f.imageBase64.value" width="200px" height="150px" />
+        </a>
       </div>
     </div>
   </form>

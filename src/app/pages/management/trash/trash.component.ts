@@ -94,10 +94,10 @@ export class TrashComponent implements OnInit {
             this.employeeService.restoreEmployee(json).subscribe(
               (res) => {
                 if (res.errorCode === '0') {
-                  this.toastService.success(res.errorDesc);
+                  this.toastService.success(res.errorDesc, 'Notification');
                   this.getEmployee();
                 } else {
-                  this.toastService.error(res.errorDesc);
+                  this.toastService.error(res.errorDesc, 'Notification');
                 }
               },
               (err) => {
@@ -108,10 +108,10 @@ export class TrashComponent implements OnInit {
             this.serviceBankingService.restoreService(json).subscribe(
               (res) => {
                 if (res.errorCode === '0') {
-                  this.toastService.success(res.errorDesc);
+                  this.toastService.success(res.errorDesc, 'Notification');
                   this.getService();
                 } else {
-                  this.toastService.error(res.errorDesc);
+                  this.toastService.error(res.errorDesc, 'Notification');
                 }
               },
               (err) => {
@@ -146,10 +146,10 @@ export class TrashComponent implements OnInit {
             this.employeeService.removeEmployee(json).subscribe(
               (res) => {
                 if (res.errorCode === '0') {
-                  this.toastService.success(res.errorDesc);
+                  this.toastService.success(res.errorDesc, 'Notification');
                   this.getEmployee();
                 } else {
-                  this.toastService.error(res.errorDesc);
+                  this.toastService.error(res.errorDesc, 'Notification');
                 }
               },
               (err) => {
@@ -160,10 +160,10 @@ export class TrashComponent implements OnInit {
             this.serviceBankingService.removeService(json).subscribe(
               (res) => {
                 if (res.errorCode === '0') {
-                  this.toastService.success(res.errorDesc);
+                  this.toastService.success(res.errorDesc, 'Notification');
                   this.getService();
                 } else {
-                  this.toastService.error(res.errorDesc);
+                  this.toastService.error(res.errorDesc, 'Notification');
                 }
               },
               (err) => {

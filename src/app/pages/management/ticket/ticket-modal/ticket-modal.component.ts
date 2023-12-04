@@ -8,45 +8,43 @@ import { TicketService } from 'src/app/service/module/ticket.service';
 @Component({
   selector: 'app-ticket-modal',
   templateUrl: './ticket-modal.component.html',
-  styleUrls: ['./ticket-modal.component.css']
+  styleUrls: ['./ticket-modal.component.css'],
 })
 export class TicketModalComponent implements OnInit {
-
   @Input() type: any;
   @Input() item: any;
   @Input() listService: any;
   @Input() listEmployee: any;
   @Output() passEntry: EventEmitter<any> = new EventEmitter();
-  
+
   form: any;
   isSubmit = false;
 
   listStatus = [
     {
       id: 0,
-      name: "No-Start"
+      name: 'No-Start',
     },
     {
       id: 1,
-      name: "In Progress"
+      name: 'In Progress',
     },
     {
       id: 2,
-      name: "Done"
+      name: 'Done',
     },
-  ]
+  ];
 
   constructor(
     public activeModal: NgbActiveModal,
     private formBuilder: FormBuilder,
     private toastService: ToastrService,
     private ticketService: TicketService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.initForm();
     console.log(this.item);
-    
   }
 
   initForm() {
@@ -59,7 +57,7 @@ export class TicketModalComponent implements OnInit {
       time: [null, [Validators.required]],
       employeeId: [null, [Validators.required]],
       serviceId: [null, [Validators.required]],
-      status: [null, [Validators.required]]
+      status: [null, [Validators.required]],
     });
 
     if (this.item) {
@@ -91,25 +89,24 @@ export class TicketModalComponent implements OnInit {
   }
 
   create() {
-    this.ticketService.createTicket(this.form.value).subscribe(res => {
+    this.ticketService.createTicket(this.form.value).subscribe((res) => {
       if (res.errorCode === '0') {
-        this.toastService.success(res.errorDesc);
+        this.toastService.success(res.errorDesc, 'Notification');
         this.passEntry.emit(res);
-
       } else {
-        this.toastService.error(res.errorDesc);
+        this.toastService.error(res.errorDesc, 'Notification');
       }
-    })
+    });
   }
 
   update() {
-    this.ticketService.updateTicket(this.form.value).subscribe(res => {
+    this.ticketService.updateTicket(this.form.value).subscribe((res) => {
       if (res.errorCode === '0') {
-        this.toastService.success(res.errorDesc);
+        this.toastService.success(res.errorDesc, 'Notification');
         this.passEntry.emit(res);
       } else {
-        this.toastService.error(res.errorDesc);
+        this.toastService.error(res.errorDesc, 'Notification');
       }
-    })
+    });
   }
 }

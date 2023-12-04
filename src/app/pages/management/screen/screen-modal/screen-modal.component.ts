@@ -92,10 +92,10 @@ export class ScreenModalComponent implements OnInit {
 
     this.screenService.createScreen(json).subscribe((res) => {
       if (res.errorCode === '0') {
-        this.toastService.success(res.errorDesc);
+        this.toastService.success(res.errorDesc, 'Notification');
         this.passEntry.emit(res);
       } else {
-        this.toastService.error(res.errorDesc);
+        this.toastService.error(res.errorDesc, 'Notification');
       }
     });
   }
@@ -107,10 +107,10 @@ export class ScreenModalComponent implements OnInit {
     };
     this.screenService.updateScreen(json).subscribe((res) => {
       if (res.errorCode === '0') {
-        this.toastService.success(res.errorDesc);
+        this.toastService.success(res.errorDesc, 'Notification');
         this.passEntry.emit(res);
       } else {
-        this.toastService.error(res.errorDesc);
+        this.toastService.error(res.errorDesc, 'Notification');
       }
     });
   }

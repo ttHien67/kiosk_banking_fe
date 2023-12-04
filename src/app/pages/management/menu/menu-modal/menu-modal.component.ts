@@ -108,10 +108,10 @@ export class MenuModalComponent implements OnInit {
 
     this.menuService.createMenu(json).subscribe((res) => {
       if (res.errorCode === '0') {
-        this.toastService.success(res.errorDesc);
+        this.toastService.success(res.errorDesc, 'Notification');
         this.passEntry.emit(res);
       } else {
-        this.toastService.error(res.errorDesc);
+        this.toastService.error(res.errorDesc, 'Notification');
       }
     });
   }
@@ -122,10 +122,10 @@ export class MenuModalComponent implements OnInit {
     };
     this.menuService.updateMenu(json).subscribe((res) => {
       if (res.errorCode === '0') {
-        this.toastService.success(res.errorDesc);
+        this.toastService.success(res.errorDesc, 'Notification');
         this.passEntry.emit(res);
       } else {
-        this.toastService.error(res.errorDesc);
+        this.toastService.error(res.errorDesc, 'Notification');
       }
     });
   }

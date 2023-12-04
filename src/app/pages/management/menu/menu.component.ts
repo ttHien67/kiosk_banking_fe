@@ -82,10 +82,10 @@ export class MenuComponent implements OnInit {
           this.menuService.deleteMenu(json).subscribe(
             (res) => {
               if (res.errorCode === '0') {
-                this.toastService.success(res.errorDesc);
+                this.toastService.success(res.errorDesc, 'Notification');
                 this.getMenu();
               } else {
-                this.toastService.error(res.errorDesc);
+                this.toastService.error(res.errorDesc, 'Notification');
               }
             },
             (err) => {

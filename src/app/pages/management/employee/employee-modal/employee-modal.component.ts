@@ -89,10 +89,10 @@ export class EmployeeModalComponent implements OnInit {
 
     this.employeeService.createEmployee(this.form.value).subscribe((res) => {
       if (res.errorCode === '0') {
-        this.toastService.success(res.errorDesc);
+        this.toastService.success(res.errorDesc, 'Notification');
         this.passEntry.emit(res);
       } else {
-        this.toastService.error(res.errorDesc);
+        this.toastService.error(res.errorDesc, 'Notification');
       }
     });
   }
@@ -100,10 +100,10 @@ export class EmployeeModalComponent implements OnInit {
   update() {
     this.employeeService.updateEmployee(this.form.value).subscribe((res) => {
       if (res.errorCode === '0') {
-        this.toastService.success(res.errorDesc);
+        this.toastService.success(res.errorDesc, 'Notification');
         this.passEntry.emit(res);
       } else {
-        this.toastService.error(res.errorDesc);
+        this.toastService.error(res.errorDesc, 'Notification');
       }
     });
   }

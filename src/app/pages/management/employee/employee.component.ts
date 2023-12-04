@@ -99,7 +99,7 @@ export class EmployeeComponent implements OnInit {
           this.employeeService.deleteEmployee(json).subscribe(
             (res) => {
               if (res.errorCode === '0') {
-                this.toastService.success(res.errorDesc);
+                this.toastService.success(res.errorDesc, 'Notification');
                 this.getEmployee();
               } else {
                 this.toastService.error(res.errorDesc);
