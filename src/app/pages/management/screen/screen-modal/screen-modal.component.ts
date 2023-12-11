@@ -37,7 +37,7 @@ export class ScreenModalComponent implements OnInit {
     this.form = this.formBuilder.group({
       id: [null],
       name: [null, [Validators.required]],
-      image: [null, [Validators.required]],
+      imageBase64: [null, [Validators.required]],
       startDate: [null],
       endDate: [null],
       startTime: [null],
@@ -47,7 +47,6 @@ export class ScreenModalComponent implements OnInit {
     if (this.item) {
       this.form.patchValue(this.item);
       this.f.image.patchValue(null);
-      console.log(this.form.value);
     }
   }
 
@@ -60,7 +59,7 @@ export class ScreenModalComponent implements OnInit {
       this.nameImage = event.target.files[0].name;
       var reader = new FileReader();
       reader.onload = (event: any) => {
-        this.url = event.target.result;
+        this.f.imageBase64.patchValue(event.target.result);
       };
       reader.readAsDataURL(event.target.files[0]);
     }
@@ -87,7 +86,6 @@ export class ScreenModalComponent implements OnInit {
   create() {
     const json = {
       ...this.form.value,
-      image: this.nameImage,
     };
 
     this.screenService.createScreen(json).subscribe((res) => {
@@ -103,7 +101,6 @@ export class ScreenModalComponent implements OnInit {
   update() {
     const json = {
       ...this.form.value,
-      image: this.nameImage || this.f.image.value,
     };
     this.screenService.updateScreen(json).subscribe((res) => {
       if (res.errorCode === '0') {

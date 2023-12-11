@@ -6,79 +6,41 @@
           <div class="p-2">
             <form [formGroup]="form">
               <div class="row">
-                <label
-                  class="col-sm-4 col-md-6 col-lg-5 col-xl-2 col-form-label mt-2"
-                  >Name:
+                <label class="col-sm-4 col-md-6 col-lg-5 col-xl-2 col-form-label mt-2">Name:
                 </label>
                 <div class="col-sm-7 col-md-6 col-lg-7 col-xl-4 mt-2">
-                  <input
-                    type="text"
-                    formControlName="name"
-                    class="form-control py-2"
-                    placeholder="Enter your name"
-                    autocomplete="none"
-                  />
+                  <input type="text" formControlName="name" class="form-control py-2" placeholder="Enter your name"
+                    autocomplete="none" />
                 </div>
 
-                <label
-                  class="col-sm-4 col-md-6 col-lg-5 col-xl-2 col-form-label mt-2"
-                  >Phone:
+                <label class="col-sm-4 col-md-6 col-lg-5 col-xl-2 col-form-label mt-2">Phone:
                 </label>
                 <div class="col-sm-7 col-md-6 col-lg-7 col-xl-4 mt-2">
-                  <input
-                    type="text"
-                    formControlName="phone"
-                    class="form-control py-2"
-                    placeholder="Enter your phone"
-                    autocomplete="none"
-                  />
+                  <input type="text" formControlName="phone" class="form-control py-2" placeholder="Enter your phone"
+                    autocomplete="none" />
                 </div>
 
-                <label
-                  class="col-sm-4 col-md-6 col-lg-5 col-xl-2 col-form-label mt-2"
-                  >Date:
+                <label class="col-sm-4 col-md-6 col-lg-5 col-xl-2 col-form-label mt-2">Date:
                 </label>
                 <div class="col-sm-7 col-md-6 col-lg-7 col-xl-4 mt-2">
-                  <input
-                    type="date"
-                    formControlName="date"
-                    class="form-control py-2"
-                    placeholder="Enter your date"
-                    autocomplete="none"
-                  />
+                  <input type="date" formControlName="date" class="form-control py-2" placeholder="Enter your date"
+                    autocomplete="none" />
                 </div>
 
-                <label
-                  class="col-sm-4 col-md-6 col-lg-5 col-xl-2 col-form-label mt-2"
-                  >Service:
+                <label class="col-sm-4 col-md-6 col-lg-5 col-xl-2 col-form-label mt-2">Service:
                 </label>
                 <div class="col-sm-7 col-md-6 col-lg-7 col-xl-4 mt-2">
-                  <ng-select
-                    [items]="listService"
-                    bindValue="id"
-                    bindLabel="name"
-                    formControlName="serviceId"
-                    placeholder="Select service"
-                  >
+                  <ng-select [items]="listService" bindValue="id" bindLabel="name" formControlName="serviceId"
+                    placeholder="Select service">
                   </ng-select>
                 </div>
 
-                <label
-                  *ngIf="accountRole != 'EMPLOYEE'"
-                  class="col-sm-4 col-md-6 col-lg-5 col-xl-2 col-form-label mt-2"
-                  >Employee:
+                <label *ngIf="accountRole != 'EMPLOYEE'"
+                  class="col-sm-4 col-md-6 col-lg-5 col-xl-2 col-form-label mt-2">Employee:
                 </label>
-                <div
-                  class="col-sm-7 col-md-6 col-lg-7 col-xl-4 mt-2"
-                  *ngIf="accountRole != 'EMPLOYEE'"
-                >
-                  <ng-select
-                    [items]="listEmployee"
-                    bindValue="id"
-                    bindLabel="name"
-                    formControlName="employeeId"
-                    placeholder="Select employee"
-                  >
+                <div class="col-sm-7 col-md-6 col-lg-7 col-xl-4 mt-2" *ngIf="accountRole != 'EMPLOYEE'">
+                  <ng-select [items]="listEmployee" bindValue="id" bindLabel="name" formControlName="employeeId"
+                    placeholder="Select employee">
                   </ng-select>
                 </div>
               </div>
@@ -87,46 +49,25 @@
             <div class="row pt-3">
               <div class="col-4 text-left">
                 <label class="label btn btn-primary">
-                  <input
-                    placeholder="Scan"
-                    #file
-                    type="file"
-                    (change)="onSelects(file.files)"
-                    [accept]="'.jpg, .png, .gif, .jpeg'"
-                  />
+                  <input placeholder="Scan" #file type="file" (change)="onSelects(file.files)"
+                    [accept]="'.jpg, .png, .gif, .jpeg'" />
 
                   <div *ngFor="let item of qrCodeResult" hidden="true">
-                    <ngx-scanner-qrcode
-                      #actionFile="scanner"
-                      [src]="item.url"
-                      [config]="config"
-                      (event)="searchByQrCode(actionFile.data.value)"
-                    ></ngx-scanner-qrcode>
+                    <ngx-scanner-qrcode #actionFile="scanner" [src]="item.url" [config]="config"
+                      (event)="searchByQrCode(actionFile.data.value)"></ngx-scanner-qrcode>
                   </div>
                   <i class="fa-solid fa-qrcode mr-1"></i>
                   <span>Scan file</span>
                 </label>
-                <button
-                  class="btn btn-warning mr-1"
-                  (click)="export()"
-                  type="button"
-                >
+                <button class="btn btn-warning mr-1" (click)="export()" type="button">
                   <i class="fas fa-cloud-download-alt"></i> Export
                 </button>
               </div>
               <div class="col-8 text-right">
-                <button
-                  type="button"
-                  class="btn btn-secondary mr-1 mb-1"
-                  (click)="refresh()"
-                >
+                <button type="button" class="btn btn-secondary mr-1 mb-1" (click)="refresh()">
                   <i class="fa-solid fa-rotate-right mr-1"></i>Refresh
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-primary mr-1 mb-1"
-                  (click)="search()"
-                >
+                <button type="button" class="btn btn-primary mr-1 mb-1" (click)="search()">
                   <i class="fas fa-search mr-1"></i>Search
                 </button>
               </div>
@@ -138,9 +79,7 @@
       <div class="border-bottom-dotted mt-2">
         <div class="row">
           <div class="col-6">
-            <label class="text-uppercase font-weight-medium theme-color"
-              >Ticket list</label
-            >
+            <label class="text-uppercase font-weight-medium theme-color">Ticket list</label>
           </div>
         </div>
       </div>
@@ -165,36 +104,30 @@
                 <td class="text-center align-middle" colspan="11">No data</td>
               </tr>
               <tr *ngFor="let item of listTicket; let i = index">
-                <td
-                  class="align-middle text-center text-primary"
-                  (click)="openModal(item, 'view')"
-                >
+                <td class="align-middle text-center text-primary" (click)="openModal(item, 'view')">
                   <span class="m-cursor"> {{ item?.code }}</span>
                 </td>
                 <td class="align-middle">
                   {{ item?.name }}
                 </td>
                 <td class="align-middle">
-                  {{ item?.date | date : "MM-dd-yyyy" }}
+                  {{ item?.date | date : "dd-MM-yyyy" }}
                 </td>
                 <td class="align-middle">
                   {{ item?.room }}
                 </td>
                 <td class="align-middle">
                   {{
-                    item?.status === 0
-                      ? "No Start"
-                      : item?.status === 1
-                      ? "In Progress"
-                      : "Done"
+                  item?.status === 0
+                  ? "No Start"
+                  : item?.status === 1
+                  ? "In Progress"
+                  : "Done"
                   }}
                 </td>
                 <td class="align-middle text-center">
                   <div *ngIf="item?.attitude > 0; else other">
-                    <label
-                      *ngFor="let i of getRange(item?.attitude)"
-                      class="icon fas fa-star"
-                    ></label>
+                    <label *ngFor="let i of getRange(item?.attitude)" class="icon fas fa-star"></label>
                   </div>
                   <ng-template #other> </ng-template>
                 </td>
@@ -202,51 +135,30 @@
                   {{ item?.comment }}
                 </td>
                 <td class="align-middle text-center">
-                  <i
-                    *ngIf="item?.status != 2"
-                    class="fas fa-edit fa-lg text-primary m-cursor"
-                    title="Chỉnh sửa"
-                    (click)="openModal(item, 'edit')"
-                  ></i>
-                  <i
-                    *ngIf="item?.status === 1"
-                    title="Speak"
-                    class="fa-solid fa-volume-high m-cursor"
-                    (click)="speakText(item)"
-                  ></i>
+                  <i *ngIf="item?.status != 2" class="fas fa-edit fa-lg text-primary m-cursor" title="Chỉnh sửa"
+                    (click)="openModal(item, 'edit')"></i>
+                  <i *ngIf="item?.status === 1" title="Speak" class="fa-solid fa-volume-high m-cursor"
+                    (click)="speakText(item)"></i>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div
-          class="row col-12 pr-0 justify-content-md-between align-items-md-center"
-        >
-          <div
-            class="p-0 col-sm-12 col-md-4 col-lg-4 col-xl-3 pr-0 d-none d-md-block"
-          >
+        <div class="row col-12 pr-0 justify-content-md-between align-items-md-center">
+          <div class="p-0 col-sm-12 col-md-4 col-lg-4 col-xl-3 pr-0 d-none d-md-block">
             <div class="dataTables_length">
-              <label class="d-inline-flex align-items-center"
-                >Show
-                <select
-                  #t
-                  name="tickets-table_length"
-                  aria-controls="tickets-table"
-                  name="pageSize"
+              <label class="d-inline-flex align-items-center">Show
+                <select #t name="tickets-table_length" aria-controls="tickets-table" name="pageSize"
                   (change)="changePageSize(t.value)"
-                  class="form-select custom-select custom-select-sm form-control form-control-sm mx-2"
-                >
+                  class="form-select custom-select custom-select-sm form-control form-control-sm mx-2">
                   <option [value]="10">10</option>
                   <option [value]="25">25</option>
                   <option [value]="50">50</option>
                 </select>
-                rows</label
-              >
+                rows</label>
             </div>
           </div>
-          <div
-            class="col-sm-6 col-md-6 col-lg-4 col-xl-4 mt-md-0 d-none d-xl-block m-mb-8 text-center"
-          >
+          <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4 mt-md-0 d-none d-xl-block m-mb-8 text-center">
             Show
             {{ totalSize === 0 ? 0 : (pageNumber - 1) * pageSize + 1 }}
             - {{ pageNumber * pageSize }} of
@@ -254,13 +166,8 @@
           </div>
           <div class="p-0 col-sm-12 col-md-8 col-lg-4 col-xl-5">
             <div class="text-md-right float-md-right mt-2">
-              <ngb-pagination
-                (pageChange)="changePage($event)"
-                [(page)]="pageNumber"
-                [collectionSize]="totalSize"
-                [pageSize]="pageSize"
-                [rotate]="true"
-              >
+              <ngb-pagination (pageChange)="changePage($event)" [(page)]="pageNumber" [collectionSize]="totalSize"
+                [pageSize]="pageSize" [rotate]="true">
               </ngb-pagination>
             </div>
           </div>

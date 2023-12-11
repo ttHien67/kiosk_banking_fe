@@ -1,105 +1,58 @@
 <div class="modal-header align-middle">
   <h4 id="modal-title" class="text-primary">
     {{
-      type === "create"
-        ? "Create screen"
-        : type === "edit"
-        ? "Edit screen"
-        : "View"
+    type === "create"
+    ? "Create screen"
+    : type === "edit"
+    ? "Edit screen"
+    : "View"
     }}
   </h4>
-  <button
-    (click)="activeModal.dismiss('Cross click')"
-    aria-describedby="modal-title"
-    class="close"
-    type="button"
-  >
+  <button (click)="activeModal.dismiss('Cross click')" aria-describedby="modal-title" class="close" type="button">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body">
   <form [formGroup]="form" id="form-1">
     <div class="row">
-      <ul
-        ngbNav
-        #nav="ngbNav"
-        [(activeId)]="active"
-        class="nav-tabs"
-        (navChange)="navChange($event)"
-      >
+      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" (navChange)="navChange($event)">
         <li [ngbNavItem]="1">
           <button ngbNavLink>Holiday configuration</button>
           <ng-template ngbNavContent>
             <div class="row">
               <div class="col-sm-12 col-md-6 form-group">
-                <label class="pt-1"
-                  >Name<span class="text-danger">(*)</span></label
-                >
-                <input
-                  [ngClass]="{ 'is-invalid': isSubmit && f.name.errors }"
-                  maxlength="255"
-                  class="form-control"
-                  formControlName="name"
-                  autocomplete="none"
-                  placeholder="Enter your name"
-                  type="text"
-                />
+                <label class="pt-1">Name<span class="text-danger">(*)</span></label>
+                <input [ngClass]="{ 'is-invalid': isSubmit && f.name.errors }" maxlength="255" class="form-control"
+                  formControlName="name" autocomplete="none" placeholder="Enter your name" type="text" />
                 <div *ngIf="isSubmit && f.name.errors" class="invalid-feedback">
-                  <span *ngIf="f.name.errors.required"
-                    >Please enter your name</span
-                  >
+                  <span *ngIf="f.name.errors.required">Please enter your name</span>
                 </div>
               </div>
 
               <div class="col-sm-12 col-md-6">
-                <label class="pt-1"
-                  >Image<span class="text-danger">(*)</span></label
-                >
-                <input
-                  type="file"
-                  class="form-control py-2"
-                  [ngClass]="{ 'is-invalid': isSubmit && f.image.errors }"
-                  formControlName="image"
-                  (change)="addFile($event)"
-                />
-                <div
-                  *ngIf="isSubmit && f.image.errors"
-                  class="invalid-feedback"
-                >
-                  <span *ngIf="f.image.errors.required"
-                    >Please enter your image</span
-                  ><br />
+                <label class="pt-1">Image<span class="text-danger">(*)</span></label>
+                <input type="file" class="form-control py-2"
+                  [ngClass]="{ 'is-invalid': isSubmit && f.imageBase64.errors }" (change)="addFile($event)" />
+                <div *ngIf="isSubmit && f.imageBase64.errors" class="invalid-feedback">
+                  <span *ngIf="f.imageBase64.errors.required">Please enter your image</span><br />
                 </div>
-              </div>
-              <div
-                class="col-sm-12 col-md-12"
-                *ngIf="url || f.image.value"
-                style="max-height: 30%"
-              >
-                <img [src]="url || 'assets/img/' + f.image.value" />
               </div>
 
               <div class="col-sm-12 col-md-6 form-group">
                 <label class="pt-1">From date</label>
-                <input
-                  class="form-control"
-                  formControlName="startDate"
-                  placeholder="Enter your date"
-                  autocomplete="none"
-                  type="date"
-                  maxlength="255"
-                />
+                <input class="form-control" formControlName="startDate" placeholder="Enter your date"
+                  autocomplete="none" type="date" maxlength="255" />
               </div>
               <div class="col-sm-12 col-md-6 form-group">
                 <label class="pt-1">To date</label>
-                <input
-                  class="form-control"
-                  formControlName="endDate"
-                  placeholder="Enter your date"
-                  autocomplete="none"
-                  type="date"
-                  maxlength="255"
-                />
+                <input class="form-control" formControlName="endDate" placeholder="Enter your date" autocomplete="none"
+                  type="date" maxlength="255" />
+              </div>
+
+              <div class="col-sm-12 col-md-12 pt-2">
+                <a [href]="f.imageBase64.value" *ngIf="f.imageBase64.value">
+                  <img [src]="f.imageBase64.value" width="200px" height="150px" />
+                </a>
               </div>
             </div>
           </ng-template>
@@ -110,97 +63,47 @@
           <ng-template ngbNavContent>
             <div class="row">
               <div class="col-sm-12 col-md-6 form-group">
-                <label class="pt-1"
-                  >Name<span class="text-danger">(*)</span></label
-                >
-                <input
-                  [ngClass]="{ 'is-invalid': isSubmit && f.name.errors }"
-                  maxlength="255"
-                  class="form-control"
-                  formControlName="name"
-                  autocomplete="none"
-                  placeholder="Enter your name"
-                  type="text"
-                />
+                <label class="pt-1">Name<span class="text-danger">(*)</span></label>
+                <input [ngClass]="{ 'is-invalid': isSubmit && f.name.errors }" maxlength="255" class="form-control"
+                  formControlName="name" autocomplete="none" placeholder="Enter your name" type="text" />
                 <div *ngIf="isSubmit && f.name.errors" class="invalid-feedback">
-                  <span *ngIf="f.name.errors.required"
-                    >Please enter your name</span
-                  >
+                  <span *ngIf="f.name.errors.required">Please enter your name</span>
                 </div>
               </div>
 
               <div class="col-sm-12 col-md-6">
-                <label class="pt-1"
-                  >Image<span class="text-danger">(*)</span></label
-                >
-                <input
-                  type="file"
-                  class="form-control py-2"
-                  [ngClass]="{ 'is-invalid': isSubmit && f.image.errors }"
-                  formControlName="image"
-                  (change)="addFile($event)"
-                />
-                <div
-                  *ngIf="isSubmit && f.image.errors"
-                  class="invalid-feedback"
-                >
-                  <span *ngIf="f.image.errors.required"
-                    >Please enter your image</span
-                  ><br />
-                </div>
-              </div>
-              <div
-                class="col-sm-12 col-md-12"
-                *ngIf="url || f.image.value"
-                style="max-height: 30%"
-              >
-                <img [src]="url || 'assets/img/' + f.image.value" />
-              </div>
-
-              <div class="col-sm-12 col-md-6 form-group">
-                <label class="pt-1"
-                  >From time<span class="text-danger">(*)</span></label
-                >
-                <input
-                  class="form-control"
-                  [ngClass]="{ 'is-invalid': isSubmit && f.startTime.errors }"
-                  formControlName="startTime"
-                  placeholder="Enter your from time"
-                  autocomplete="none"
-                  type="time"
-                  maxlength="255"
-                />
-                <div
-                  *ngIf="isSubmit && f.startTime.errors"
-                  class="invalid-feedback"
-                >
-                  <span *ngIf="f.startTime.errors.required"
-                    >Please enter your from time</span
-                  ><br />
+                <label class="pt-1">Image<span class="text-danger">(*)</span></label>
+                <input type="file" class="form-control py-2"
+                  [ngClass]="{ 'is-invalid': isSubmit && f.imageBase64.errors }" (change)="addFile($event)" />
+                <div *ngIf="isSubmit && f.imageBase64.errors" class="invalid-feedback">
+                  <span *ngIf="f.imageBase64.errors.required">Please enter your image</span><br />
                 </div>
               </div>
 
               <div class="col-sm-12 col-md-6 form-group">
-                <label class="pt-1"
-                  >To time<span class="text-danger">(*)</span></label
-                >
-                <input
-                  class="form-control"
-                  [ngClass]="{ 'is-invalid': isSubmit && f.endTime.errors }"
-                  formControlName="endTime"
-                  placeholder="Enter your to time"
-                  autocomplete="none"
-                  type="time"
-                  maxlength="255"
-                />
-                <div
-                  *ngIf="isSubmit && f.endTime.errors"
-                  class="invalid-feedback"
-                >
-                  <span *ngIf="f.endTime.errors.required"
-                    >Please enter your to time</span
-                  ><br />
+                <label class="pt-1">From time<span class="text-danger">(*)</span></label>
+                <input class="form-control" [ngClass]="{ 'is-invalid': isSubmit && f.startTime.errors }"
+                  formControlName="startTime" placeholder="Enter your from time" autocomplete="none" type="time"
+                  maxlength="255" />
+                <div *ngIf="isSubmit && f.startTime.errors" class="invalid-feedback">
+                  <span *ngIf="f.startTime.errors.required">Please enter your from time</span><br />
                 </div>
+              </div>
+
+              <div class="col-sm-12 col-md-6 form-group">
+                <label class="pt-1">To time<span class="text-danger">(*)</span></label>
+                <input class="form-control" [ngClass]="{ 'is-invalid': isSubmit && f.endTime.errors }"
+                  formControlName="endTime" placeholder="Enter your to time" autocomplete="none" type="time"
+                  maxlength="255" />
+                <div *ngIf="isSubmit && f.endTime.errors" class="invalid-feedback">
+                  <span *ngIf="f.endTime.errors.required">Please enter your to time</span><br />
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-12 pt-2">
+                <a [href]="f.imageBase64.value" *ngIf="f.imageBase64.value">
+                  <img [src]="f.imageBase64.value" width="200px" height="150px" />
+                </a>
               </div>
             </div>
           </ng-template>

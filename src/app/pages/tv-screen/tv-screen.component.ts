@@ -46,7 +46,9 @@ export class TvScreenComponent implements OnInit {
     const d = new Date();
     const month =
       d.getMonth() + 1 < 10 ? '0' + (d.getMonth() + 1) : d.getMonth() + 1;
-    const date = d.getDate() + 1 < 10 ? '0' + d.getDate() : d.getDate();
+    const date = d.getDate() < 10 ? '0' + d.getDate() : d.getDate();
+    console.log(d.getDate());
+
     return d.getFullYear() + '-' + month + '-' + date;
   }
 
@@ -90,7 +92,7 @@ export class TvScreenComponent implements OnInit {
       const endTime: any = new Date(this.getDate() + ' ' + item.endTime);
 
       if (currentTime >= startTime && currentTime <= endTime) {
-        this.currentImage = item.image;
+        this.currentImage = item.imageBase64;
         timeDifferenceInMillis = endTime - currentTime;
       }
     }
@@ -100,14 +102,14 @@ export class TvScreenComponent implements OnInit {
         continue;
       }
       if (currentDate >= item?.startDate && currentDate <= item?.endDate) {
-        this.currentImage = item.image;
+        this.currentImage = item.imageBase64;
         const startDate: any = new Date(item?.startDate);
         const endDate: any = new Date(item?.endDate);
         timeDifferenceInMillis = endDate - startDate;
       }
     }
 
-    this.backgroundImage = `url(\'assets/img/${this.currentImage}\')`;
+    this.backgroundImage = `url(${this.currentImage})`;
     setTimeout(() => this.getScreen(), timeDifferenceInMillis);
   }
 

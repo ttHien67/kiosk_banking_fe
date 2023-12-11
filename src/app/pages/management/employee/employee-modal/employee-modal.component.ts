@@ -20,6 +20,9 @@ export class EmployeeModalComponent implements OnInit {
 
   listQuantity = [
     {
+      code: 1,
+    },
+    {
       code: 5,
     },
     {

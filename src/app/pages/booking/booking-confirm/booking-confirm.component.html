@@ -1,11 +1,6 @@
 <div class="modal-header align-middle">
   <h4 id="modal-title" class="text-primary">Confirm information</h4>
-  <button
-    (click)="activeModal.dismiss('Cross click')"
-    aria-describedby="modal-title"
-    class="close"
-    type="button"
-  >
+  <button (click)="activeModal.dismiss('Cross click')" aria-describedby="modal-title" class="close" type="button">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
@@ -14,15 +9,8 @@
     <div class="row">
       <div class="col-sm-12 col-md-6 form-group">
         <label class="pt-1">Code<span class="text-danger">(*)</span></label>
-        <input
-          [ngClass]="{ 'is-invalid': isSubmit && f.code.errors }"
-          maxlength="255"
-          class="form-control"
-          formControlName="code"
-          autocomplete="none"
-          placeholder="Enter your code"
-          type="text"
-        />
+        <input [ngClass]="{ 'is-invalid': isSubmit && f.code.errors }" maxlength="255" class="form-control"
+          formControlName="code" autocomplete="none" placeholder="Enter your code" type="text" />
         <div *ngIf="isSubmit && f.code.errors" class="invalid-feedback">
           <span *ngIf="f.code.errors.required">Please enter your code</span>
         </div>
@@ -30,15 +18,8 @@
 
       <div class="col-sm-12 col-md-6 form-group">
         <label class="pt-1">Name<span class="text-danger">(*)</span></label>
-        <input
-          [ngClass]="{ 'is-invalid': isSubmit && f.name.errors }"
-          maxlength="255"
-          class="form-control"
-          formControlName="name"
-          autocomplete="none"
-          placeholder="Enter your name"
-          type="text"
-        />
+        <input [ngClass]="{ 'is-invalid': isSubmit && f.name.errors }" maxlength="255" class="form-control"
+          formControlName="name" autocomplete="none" placeholder="Enter your name" type="text" />
         <div *ngIf="isSubmit && f.name.errors" class="invalid-feedback">
           <span *ngIf="f.name.errors.required">Please enter your name</span>
         </div>
@@ -46,68 +27,35 @@
 
       <div class="col-sm-12 col-md-6 form-group">
         <label class="pt-1">Phone<span class="text-danger">(*)</span></label>
-        <input
-          class="form-control"
-          [ngClass]="{ 'is-invalid': isSubmit && f.phone.errors }"
-          formControlName="phone"
-          placeholder="Enter your phone"
-          autocomplete="none"
-          type="text"
-          maxlength="255"
-        />
+        <input class="form-control" [ngClass]="{ 'is-invalid': isSubmit && f.phone.errors }" formControlName="phone"
+          placeholder="Enter your phone" autocomplete="none" type="text" maxlength="255" />
         <div *ngIf="isSubmit && f.phone.errors" class="invalid-feedback">
-          <span *ngIf="f.phone.errors.required">Please enter your phone</span
-          ><br />
+          <span *ngIf="f.phone.errors.required">Please enter your phone</span><br />
         </div>
       </div>
 
       <div class="col-sm-12 col-md-6 form-group">
         <label class="pt-1">Date<span class="text-danger">(*)</span></label>
-        <input
-          #event
-          type="text"
-          [ngClass]="{ 'is-invalid': isSubmit && f.date.errors }"
-          formControlName="date"
-          class="form-control"
-          placeholder="Enter your date"
-          [readonly]="true"
-        />
+        <input #event type="text" [ngClass]="{ 'is-invalid': isSubmit && f.date.errors }" formControlName="date"
+          class="form-control" placeholder="Enter your date" [readonly]="true" />
       </div>
 
       <div class="col-sm-12 col-md-6 form-group">
         <label class="pt-1">Time<span class="text-danger">(*)</span></label>
-        <input
-          #event
-          type="text"
-          [ngClass]="{ 'is-invalid': isSubmit && f.date.errors }"
-          formControlName="time"
-          class="form-control"
-          placeholder="Enter your time"
-          [readonly]="true"
-        />
+        <input #event type="text" [ngClass]="{ 'is-invalid': isSubmit && f.date.errors }" formControlName="time"
+          class="form-control" placeholder="Enter your time" [readonly]="true" />
       </div>
 
       <div class="col-sm-12 col-md-6 form-group">
         <label class="pt-1">Service<span class="text-danger">(*)</span></label>
-        <ng-select
-          [items]="listService"
-          bindValue="id"
-          bindLabel="name"
-          formControlName="serviceId"
-          [readonly]="true"
-        >
+        <ng-select [items]="listService" bindValue="id" bindLabel="name" formControlName="serviceId" [readonly]="true">
         </ng-select>
       </div>
 
       <div class="col-sm-12 col-md-6 form-group">
         <label class="pt-1">Room<span class="text-danger">(*)</span></label>
-        <ng-select
-          [items]="listEmployee"
-          bindValue="id"
-          bindLabel="room"
-          formControlName="employeeId"
-          [readonly]="true"
-        >
+        <ng-select [items]="listEmployee" bindValue="id" bindLabel="room" formControlName="employeeId"
+          [readonly]="true">
         </ng-select>
       </div>
     </div>
@@ -117,7 +65,7 @@
   <button (click)="close()" class="btn btn-secondary" type="button">
     <i class="fa-solid fa-xmark mr-1"></i>Cancel
   </button>
-  <button (click)="submit()" class="btn btn-primary" type="button">
+  <!-- <button (click)="submit()" class="btn btn-primary" type="button">
     <i class="fa fa-check mr-1"></i>Confirm
-  </button>
+  </button> -->
 </div>

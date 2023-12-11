@@ -118,6 +118,14 @@ export class TicketService {
     );
   }
 
+  countTicketForEmployee(json: any) {
+    return this.http.post<BaseResponse>(
+      CommandURL.TICKET + '/countTicketForEmployee',
+      json,
+      { headers: this.header }
+    );
+  }
+
   export(json: any) {
     return this.http.post(CommandURL.TICKET + '/export', json, {
       responseType: 'arraybuffer',
